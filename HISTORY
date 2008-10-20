@@ -1,0 +1,60 @@
+===========================================================
+Package: CPSTramline 0.9.0
+===========================================================
+First release built by: gracinet at: 2008-10-09T13:27:46
+SVN Tag: https://viral-prod.com/svn/CPSTramline/tags/0.9.0
+Build from: https://viral-prod.com/svn/CPSTramline/trunk@948
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+- Range requests now work
+Bug fixes
+~~~~~~~~~
+-
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- External to tramline to import id_to_path function
+
+===========================================================
+Package: CPSTramline 0.8.0
+===========================================================
+First release built by: gracinet at: 2008-10-09T13:20:09
+SVN Tag: https://viral-prod.com/svn/CPSTramline/tags/0.8.0
+Build from: https://viral-prod.com/svn/CPSTramline/trunk@944
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+-
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
+Package: CPSTramline 0.1.0
+===========================================================
+First release built by: gracinet at: 2008-02-18T18:33:28
+SVN Tag: https://viral-prod.com/svn/CPSTramline/tags/0.1.0
+Build from: https://viral-prod.com/svn/CPSTramline/trunk@841
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+-
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- First package
+

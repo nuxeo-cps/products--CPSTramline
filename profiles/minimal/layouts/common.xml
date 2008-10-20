@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<object name="common" meta_type="CPS Layout">
+
+ <widget name="tramline_enable" meta_type="Tramline Enabler Widget">
+  <property name="hidden_layout_modes">
+   <element value="view"/>
+  </property>
+  <property name="hidden_empty">True</property>
+ </widget>
+
+ <table>
+  <row>
+   <cell name="Title" ncols="2"/>
+  </row>
+  <row>
+   <cell name="Byline"/>
+   <cell name="tramline_enable"/>
+  </row>
+  <row>
+   <cell name="Description"/>
+  </row>
+ </table>
+
+</object>

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<export-steps>
+ <export-step id="tramline"
+              handler="Products.CPSTramline.exportimport.exportTramlineTool"
+              title="Tramline Tool">
+  Export Tramline tool and it's configuration.
+ </export-step>
+</export-steps>

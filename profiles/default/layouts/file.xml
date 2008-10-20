@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<object name="file" meta_type="CPS Layout">
+ <widget name="file" meta_type="Tramline Attached File Widget"/>
+</object>

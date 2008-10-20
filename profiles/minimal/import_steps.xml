@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<import-steps>
+ <import-step id="tramline" version="20080215"
+              handler="Products.CPSTramline.exportimport.importTramlineTool"
+              title="Tramline Tool">
+  <dependency step="toolset"/>
+  Import Tramline Tool and its configuration
+ </import-step>
+</import-steps>
