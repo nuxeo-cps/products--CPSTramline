@@ -1,5 +1,15 @@
+==================
+CPSTramline README
+==================
 
-	This product integrates CPS with Infrae Tramline
+:Author: Georges Racinet
+
+:Revision: $Id$
+
+.. sectnum::    :depth: 4
+.. contents::   :depth: 4
+
+This product integrates CPS with Infrae Tramline.
 
 Requirement: CPS 3.4.x, with CPSSchemas >= 1.7.1
 
@@ -17,6 +27,8 @@ There are two configuration profiles:
    tramline.
 
 IMPORTANT: LIMITATIONS
+======================
+
    - This product will work properly under Unixes systems only.
    - Doesn't handle Zope OFS.Image instances yet, hence CPSImageWidget
    and friends won't work.
@@ -24,6 +36,7 @@ IMPORTANT: LIMITATIONS
      ported yet. Therefore indexing won't work
 
 INSTALLATION
+============
 
    - use the patched tramline and follow its installation
      instructions (INSTALL.txt),
@@ -31,13 +44,16 @@ INSTALLATION
      configuration.
 
      This patched tramline is available as a svn checkout:
-     svn co https://viral-prod.com/svn/tramline/trunk
+     svn co https://svn.nuxeo.org/pub/vendor/tramline/branches/gracinet-fix-range/
+
+     For the record the code was previously present at the following URL:
+     http://svn.viral-prod.com/tramline/trunk/
 
    - make sure that Zope has a write access to Tramline's repository.
 
      The recommended way to do that is to
        + put Zope's effective user in the apache group
-         (e.g, www-data with GNU/Linux debian)
+         (e.g, www-data with Debian GNU/Linux)
        + add the following in the virtual host configuration:
 	 PythonOption allow_group_write True
 
@@ -61,7 +77,7 @@ INSTALLATION
 
      With the 'explicit_enable' PythonOption above, one has to insert an hidden
      input in each <form> with tramlined inputs. Furthermore, all tramlined 
-     inputs of the form have to occurr after this hidden input to be activated.
+     inputs of the form have to occur after this hidden input to be activated.
   
      More precisely, the form of the input is:
      <input type="hidden" name="tramline_enable" 
@@ -103,11 +119,14 @@ INSTALLATION
      and 'flexible_content' layouts.
 
 EXISTING CONTENT
+================
+
    Existing content will be served as before. Any modification going
    through a Tramline aware widget will store the new content within
    Tramline.
 
 TRAMLINING CUSTOM WIDGETS
+=========================
 
      Any widget whose input field has been tramlined will have to be
      tramline-aware, which can be done by applying the TramlineMixin 
@@ -121,10 +140,7 @@ TRAMLINING CUSTOM WIDGETS
      they do inherit from CPSFileWidget. 
 
 
-   
-
-$Id: README.txt 932 2008-09-30 13:56:29Z joe $
-
-
-
-
+.. Local Variables:
+.. mode: rst
+.. End:
+.. vim: set filetype=rst:
