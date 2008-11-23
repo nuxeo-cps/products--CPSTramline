@@ -1,4 +1,24 @@
 ===========================================================
+Package: CPSTramline 0.10.0
+===========================================================
+First release built by: madarche at: 2008-11-23T21:57:39
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSTramline/tags/0.10.0
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSTramline/trunk@53051
+
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+- Now hosted at Nuxeo
+Bug fixes
+~~~~~~~~~
+-
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSTramline 0.9.0
 ===========================================================
 First release built by: gracinet at: 2008-10-09T13:27:46
