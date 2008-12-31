@@ -6,8 +6,8 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
-- Load less from tramline code, hence avoiding some dangerous confusion in the
-  install frocess
+- 
+- #1952: load less from tramline code to avoid confusion in install
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
