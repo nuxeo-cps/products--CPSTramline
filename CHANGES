@@ -6,7 +6,8 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
--
+- Load less from tramline code, hence avoiding some dangerous confusion in the
+  install frocess
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 

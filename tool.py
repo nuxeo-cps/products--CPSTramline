@@ -31,7 +31,7 @@ from Products.CMFCore.utils import SimpleItemWithProperties
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.utils import UniqueObject
 
-from tramline.core import id_to_path
+from tramlinepath import id_to_path
 
 from transactional import get_txn_manager
 
