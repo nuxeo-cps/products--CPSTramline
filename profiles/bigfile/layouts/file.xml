@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<object name="file">
+ <widget name="file" meta_type="AttachedFile Widget">
+  <property name="size_max">1048576</property>
+ </widget>
+</object>

@@ -1,0 +1,410 @@
+# Gettext Message File for default.
+# Your Name <your@email>, Year
+msgid ""
+msgstr ""
+"Project-Id-Version: default\n"
+"POT-Creation-Date: 2007-04-17 00:08default\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Your Name <your@email>\n"
+"Language-Team: Name <email>\n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"Language-Code: cpstramline.\n"
+"Language-Name: cpstramline.\n"
+"Domain: default\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Preferred-Encodings: utf-8\n"
+
+#.   <span>Edit entry</span>
+#: from ../skins/cpsdirectory_entry_edit_form.pt
+msgid "cpsdir_label_edit_entry"
+msgstr ""
+
+#.   <p condition="not:languages">
+#.       There are existing revisions of this document in all supported languages.
+#.     </p>
+#: from ../skins/content_translate_form.pt
+msgid "label_no_target_language_left"
+msgstr ""
+
+#.   <th>
+#.   	    Directly publish
+#.   	  </th>
+#: from ../skins/content_submit_form.pt
+msgid "label_viral_publish_directly"
+msgstr ""
+
+#.   <block>Transaction handled by
+#.   PayPal</block>
+#: from ../skins/widget_paypal_disclaimer_render.pt
+msgid "viral_paypal_disclaimer"
+msgstr ""
+
+#.   <a attributes="href contrib_folder/absolute_url" condition="python:contribs and len(contribs)>1" href="">
+#.       See related contributions
+#.     </a>
+#: from ../skins/portlet_contribute.pt
+msgid "viral_see_related_contributions"
+msgstr ""
+
+# Portal types
+msgid "portal_type_Big_File_title"
+msgstr ""
+
+msgid "portal_type_Big_File_description"
+msgstr ""
+
+msgid "portal_type_Collective_title"
+msgstr ""
+
+msgid "portal_type_Music_Venue_title"
+msgstr ""
+
+msgid "portal_type_Theater_Venue_title"
+msgstr ""
+
+msgid "portal_type_Venue_title"
+msgstr ""
+
+msgid "portal_type_Collective_description"
+msgstr ""
+
+msgid "portal_type_FrontDocumentPortlet_description"
+msgstr ""
+
+msgid "portal_type_FrontDocumentPortlet_title"
+msgstr ""
+
+msgid "portal_type_Paypal_Payment_description"
+msgstr ""
+
+msgid "portal_type_Paypal_Payment_title"
+msgstr ""
+
+msgid "portal_type_Show_title"
+msgstr ""
+
+msgid "portal_type_Show_descr"
+msgstr ""
+
+msgid "portal_type_Gig_title"
+msgstr ""
+
+msgid "portal_type_Gig_description"
+msgstr ""
+
+# Actions
+msgid "action_init_portlets"
+msgstr ""
+
+msgid "viral_label_member_renew"
+msgstr ""
+
+msgid "action_send_by_email"
+msgstr ""
+
+msgid "action_notify_content"
+msgstr ""
+
+# Workflow
+
+msgid "heading_resubmit_of ${item_id}"
+msgstr ""
+
+# Layouts labels
+msgid "viral_portlet_front_excluded_layouts"
+msgstr ""
+
+msgid "viral_portlet_front_warn_empty_label"
+msgstr ""
+
+msgid "viral_payment_reason_label_edit"
+msgstr ""
+
+msgid "viral_var_paypal_label_edit"
+msgstr ""
+
+msgid "viral_paypal_widget_title"
+msgstr ""
+
+msgid "viral_paypal_label_edit"
+msgstr ""
+
+msgid "viral_paypal_button_label_edit"
+msgstr ""
+
+msgid "viral_currency_label_edit"
+msgstr ""
+
+msgid "viral_amount_label_edit"
+msgstr ""
+
+msgid "viral_var_paypal_not_found_label"
+msgstr ""
+
+msgid "viral_show_presentation_label"
+msgstr ""
+
+msgid "viral_show_team_label"
+msgstr ""
+
+msgid "viral_show_credits_label"
+msgstr ""
+
+msgid "viral_show_full_file_label"
+msgstr ""
+
+msgid "viral_gig_dates_label"
+msgstr ""
+
+msgid "viral_gig_fare_label"
+msgstr ""
+
+msgid "viral_gig_venue_label"
+msgstr ""
+
+msgid "viral_gig_venue_link_label"
+msgstr ""
+
+msgid "viral_gig_address_label_edit"
+msgstr ""
+
+msgid "viral_venue_sound_volume_label"
+msgstr ""
+
+msgid "viral_venue_drink_food_fares_label"
+msgstr ""
+
+msgid "viral_gig_booking_label"
+msgstr ""
+
+msgid "viral_gig_booking_label_edit"
+msgstr ""
+
+msgid "viral_gig_start_date_label_edit"
+msgstr ""
+
+msgid "viral_gig_end_date_label_edit"
+msgstr ""
+
+msgid "viral_gig_type_label"
+msgstr ""
+
+msgid "viral_gig_break_day_label"
+msgstr ""
+
+msgid "viral_gig_early_day_label"
+msgstr ""
+
+msgid "viral_venue_layout_pub"
+msgstr ""
+
+msgid "viral_venue_layout_priv"
+msgstr ""
+
+msgid "viral_venue_illus_label_edit"
+msgstr ""
+
+msgid "viral_venue_genres_label"
+msgstr ""
+
+msgid "viral_venue_contact_name_label"
+msgstr ""
+
+msgid "viral_venue_contact_type_label"
+msgstr ""
+
+msgid "viral_venue_contact_phone_label"
+msgstr ""
+
+msgid "viral_venue_contact_email_label"
+msgstr ""
+
+msgid "viral_usual_deal_label"
+msgstr ""
+
+msgid "viral_stage_room_label"
+msgstr ""
+
+msgid "viral_instruments_gear_label"
+msgstr ""
+
+msgid "viral_pa_system_label"
+msgstr ""
+
+msgid "label_venue_boss_vocitem"
+msgstr ""
+
+msgid "label_venue_prog_vocitem"
+msgstr ""
+
+msgid "label_venue_other_vocitem"
+msgstr ""
+
+msgid "help_directory_search"
+msgstr ""
+
+msgid "label_group_owner"
+msgstr ""
+
+msgid "help_group_owner"
+msgstr ""
+
+msgid "label_collective_status"
+msgstr ""
+
+msgid "label_collective_type"
+msgstr ""
+
+msgid "label_thumbnail"
+msgstr ""
+
+msgid "label_mailing_list"
+msgstr ""
+
+msgid "label_collective_abridged_title"
+msgstr ""
+
+msgid "help_collective_abridged_title"
+msgstr ""
+
+#
+# Vocabularies
+#
+msgid "label_tour_vocitem"
+msgstr ""
+
+msgid "label_concert_vocitem"
+msgstr ""
+
+msgid "label_extraordinary_vocitem"
+msgstr ""
+
+msgid "label_club_vocitem"
+msgstr ""
+
+msgid "label_revival_vocitem"
+msgstr ""
+
+msgid "label_first_prod_vocitem"
+msgstr ""
+
+msgid "monday_vocitem"
+msgstr ""
+
+msgid "tuesday_vocitem"
+msgstr ""
+
+msgid "wednesday_vocitem"
+msgstr ""
+
+msgid "thursday_vocitem"
+msgstr ""
+
+msgid "friday_vocitem"
+msgstr ""
+
+msgid "saturday_vocitem"
+msgstr ""
+
+msgid "sunday_vocitem"
+msgstr ""
+
+msgid "music_vocitem"
+msgstr ""
+
+msgid "theater_vocitem"
+msgstr ""
+
+msgid "street_shows_vocitem"
+msgstr ""
+
+msgid "signed_vocitem"
+msgstr ""
+
+msgid "supported_vocitem"
+msgstr ""
+
+msgid "registered_vocitem"
+msgstr ""
+
+msgid "label_subject_portal"
+msgstr ""
+
+msgid "label_subject_events"
+msgstr ""
+
+msgid "label_subject_communication"
+msgstr ""
+
+msgid "label_subject_org_life"
+msgstr ""
+
+# Directory layouts
+msgid "label_webmail_enabled"
+msgstr ""
+
+msgid "label_viral_member_paiement_exempted_edit"
+msgstr ""
+
+msgid "label_viral_member_paiement_exempted"
+msgstr ""
+
+msgid "label_viral_all_emails_help"
+msgstr ""
+
+# Portlets
+msgid "portlet_collective_news_title"
+msgstr ""
+
+msgid "portlet_collective_productions_title"
+msgstr ""
+
+msgid "portlet_latest_published_title"
+msgstr ""
+
+msgid "portlet_breaking_news_title"
+msgstr ""
+
+msgid "portlet_pending_docs_title"
+msgstr ""
+
+msgid "portlet_contribute_title"
+msgstr ""
+
+msgid "portlet_front_music_title"
+msgstr ""
+
+msgid "portlet_front_theater_title"
+msgstr ""
+
+# Misc
+# do need it. WTF though !
+msgid "button_search"
+msgstr ""
+
+msgid "viral_submit_ok"
+msgstr ""
+
+msgid "ml_subscribe_display"
+msgstr ""
+
+msgid "ml_subscribe_subject"
+msgstr ""
+
+msgid "ml_subscribe_body"
+msgstr ""
+
+msgid "viral_all_recordings_link"
+msgstr ""
+
+msgid "viral_collectives_link"
+msgstr ""
+
+msgid "viral_services_link"
+msgstr ""
+
+# CPSDefault overrides
+msgid "action_folder_contents"
+msgstr ""

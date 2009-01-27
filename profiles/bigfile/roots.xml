@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<roots>
+  <object name="sections" />
+  <object name="workspaces" />
+  <object name="members" />
+  <object name="SkinsHTTPCache" meta_type="Accelerated HTTP Cache Manager"/>
+</roots>

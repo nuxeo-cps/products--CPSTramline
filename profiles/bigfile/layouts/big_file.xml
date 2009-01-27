@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<object name="big_file" meta_type="CPS Layout">
+ <property name="style_prefix">layout_default_</property>
+
+ <widget name="Rights" meta_type="String Widget">
+  <property name="fields">
+   <element value="Rights"/>
+  </property>
+  <property name="label_edit">label_rights</property>
+  <property name="is_i18n">True</property>
+  <property name="hidden_layout_modes">
+   <element value="view"/>
+  </property>
+  <property name="display_width">30</property>
+  <property name="size_max">80</property>
+ </widget>
+
+ <widget name="Source" meta_type="String Widget">
+  <property name="fields">
+   <element value="Source"/>
+  </property>
+  <property name="label_edit">label_source</property>
+  <property name="is_i18n">True</property>
+  <property name="hidden_layout_modes">
+   <element value="view"/>
+  </property>
+  <property name="display_width">30</property>
+  <property name="size_max">80</property>
+ </widget>
+
+ <widget name="file" meta_type="Tramline File Widget">
+  <property name="fields">
+   <element value="big_file"/>
+  </property>
+  <property name="label">cpsdoc_attachedFile_label</property>
+  <property name="label_edit">cpsdoc_attachedFile_label</property>
+  <property name="description">cpsdoc_attachedFile_description</property>
+  <property name="is_i18n">True</property>
+  <property name="hidden_empty">True</property>
+  <property name="css_class">ddefault</property>
+  <property name="size_max">0</property>
+  <property name="display_external_editor">False</property>
+ </widget>
+
+ <table>
+  <row>
+   <cell name="Source"/>
+   <cell name="Rights"/>
+  </row>
+  <row>
+   <cell name="file" ncols="2"/>
+  </row>
+ </table>
+
+</object>

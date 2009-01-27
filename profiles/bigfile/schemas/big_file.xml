@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<object name="big_file" meta_type="CPS Schema">
+ <field name="big_file" meta_type="CPS File Field"/>
+</object>

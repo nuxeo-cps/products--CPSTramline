@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<object name=".cps_workflow_configuration">
+  <local-workflows>
+    <type name="Big File" wf="workspace_content_wf"/>
+  </local-workflows>
+</object>

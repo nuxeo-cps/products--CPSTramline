@@ -3,10 +3,9 @@ Requires
 -
 New features
 ~~~~~~~~~~~~
--
+- #1962: include a bigfile profile
 Bug fixes
 ~~~~~~~~~
-- 
 - #1952: load less from tramline code to avoid confusion in install
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~

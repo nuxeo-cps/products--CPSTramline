@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<object name="flexible_content">
+ <property name="flexible_widgets" purge="False">
+  <element value="big_file"/>
+ </property>
+ <widget name="big_file" meta_type="Tramline File Widget">
+  <property name="title">Big File</property>
+  <property name="fields">
+   <element value="?"/>
+  </property>
+  <property name="label">cpsdoc_flex_attachedFile_label</property>
+  <property name="label_edit">Big File (warning: won't be indexed)</property>
+  <property name="is_i18n">True</property>
+  <property name="readonly_layout_modes"/>
+  <property name="hidden_layout_modes"/>
+  <property name="hidden_readonly_layout_modes"/>
+  <property name="size_max">0</property>
+  <property name="display_external_editor">False</property>
+ </widget>
+</object>

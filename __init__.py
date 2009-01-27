@@ -46,3 +46,13 @@ def initialize(registrar):
         for_=ICPSSite)
 
 
+    profile_registry.registerProfile(
+        'bigfile',
+        'CPS Tramline Big File',
+        "CPS Tramline integration that adds a new 'Big File' document type.",
+        'profiles/bigfile',
+        'CPSTramline',
+        EXTENSION,
+        for_=ICPSSite)
+
+
