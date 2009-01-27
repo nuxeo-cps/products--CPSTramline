@@ -101,10 +101,19 @@ INSTALLATION
      content before this layout (in that latter case take care of choosing 
      a different widget id)
 
-   - Pass the CPS Tramline Default profile (optional)
+   - Import the CPS Tramline Default OR the CPS Tramline Big File profiles 
+     (optional)
 
-     The CPS Tramline default profile tramlines Attached File Widgets 
+     The CPS Tramline Default profile tramlines Attached File Widgets 
      for 'file' and 'flexible_content' layouts.
+
+     The CPS Tramline Big File profile creates a new document type (Big File)
+     that has to size limitations and adds also a big file widget in standard
+     flexible layouts. All these file widgets are tramlined. The standard file
+     layout is untouched, safe for the size limitation that goes to 1MB.
+
+     These two profiles are (lightly) incompatible in the hard and anyway serve
+     obviously different purposes
 
    - Go to the Tramline Tool (portal_tramline) and, if needed, correct
      the tramline path.
