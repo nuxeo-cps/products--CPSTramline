@@ -9,6 +9,8 @@
 /* file upload progress bar */
 if (typeof(jQuery)!='undefined') {
 
+jQuery.noConflict();
+
 var FileUploadRegistry = {
     wrappers: new Array(),
     forms: {}
@@ -29,7 +31,7 @@ $.fn.fileUpload = function(options) {
         field_name: 'file',
         submit_empty_forms: true,
         use_iframes: true,
-        stat_url: action+'/gp.fileupload.stat/',
+        stat_url: '/tramprog/',
         stat_delay: 1500,
         stat_timeout: 7000,
         success: function() {},
