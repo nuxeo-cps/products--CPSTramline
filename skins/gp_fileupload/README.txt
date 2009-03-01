@@ -1,10 +1,10 @@
 The files in this directory are modified versions of the static files
-of gp.upload, originally written by Gael Pasgrimaud <gael@gawel.org>.
+of gp.fileupload, originally written by Gael Pasgrimaud <gael@gawel.org>.
 
-See http://bitbucket.org/gawel for information on gp.upload and please
+See http://bitbucket.org/gawel for information on gp.fileupload and please
 check the full list of contributors there.
 
-gp.upload is released under the termes of the MIT License.
+gp.fileupload is released under the termes of the MIT License.
 
 These modifications by Georges Racinet <georges@racinet.fr> are
 released, like the rest of CPSTramline, under the terms of the GPL
