@@ -1,0 +1,15 @@
+.fuProgress {
+    color:black;
+    background:#ffcc99;
+}
+.fuProgressSuccess {
+    color:black;
+    background:#ccffcc !important;
+}
+.fuProgressFailure {
+    color:black;
+    background:#ffcccc !important;
+}
+.fuFilename {
+    margin: 0.5em;
+}
