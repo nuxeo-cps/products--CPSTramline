@@ -87,3 +87,4 @@ class TramlineFile(File):
         # Would be more consistent to have the tool return id and path
         # and we'd call the manager from here
         self.update_data(trtool.clone(str(self)))
+

@@ -19,11 +19,9 @@
 
 import unittest 
 
-from Products.CPSTramline.tool import TramlineTool
-class TramlineToolTestCase(unittest.TestCase):
+from tramlinetestcase import TramlineTestCase
 
-    def setUp(self):
-        self.tool = TramlineTool()
+class TramlineToolTestCase(TramlineTestCase):
 
     def testProperties(self):
         self.tool.manage_changeProperties(tramlinepath='/some/path', 
@@ -37,7 +35,6 @@ class TramlineToolTestCase(unittest.TestCase):
         self.tool.manage_changeProperties(tramlinepath='/some/path')
         self.assertTrue(self.tool.getFilePath('some_id'))
 
-        
 
 def test_suite():
     return unittest.TestSuite((
