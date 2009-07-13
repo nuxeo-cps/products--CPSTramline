@@ -49,7 +49,7 @@ def makeTramlineFileUpload(ofsfile):
     """
 
     fu = makeFileUploadFromOFSFile(ofsfile)
-    if fu is not None and not isinstance(ofsfile, TramlineFile):
+    if fu is not None and not ofsfile.meta_type.startswith('Tramline'):
         fu.not_tramline = True
     return fu
 
