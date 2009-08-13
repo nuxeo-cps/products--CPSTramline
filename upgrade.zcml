@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!-- $Id$ -->
+
+
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:cps="http://namespaces.nuxeo.org/cps">
+
+  <cps:upgradeStep
+      title="Add symbolic links for all existing tramline files."
+      source="0.10.0" destination="0.11.0"
+      handler=".upgrades.add_symlinks_for_all"
+      category="cpstramline"/>
+
+</configure>

@@ -4,6 +4,7 @@ Requires
 New features
 ~~~~~~~~~~~~
 - #1962: include a bigfile profile
+- #1966: provide a hierarchy of human readable file names
 Bug fixes
 ~~~~~~~~~
 - #2010: work with the ProtectedFile introduced for #1998

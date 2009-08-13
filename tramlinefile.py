@@ -61,6 +61,11 @@ class TramlineFile(File):
             log.error("Could not find tramline tool.""")
         return trtool.getFilePath(str(self))
 
+    def getHumanReadablePath(self):
+        trtool = getToolByName(self, "portal_tramline", None)
+        if trtool is None:
+            log.error("Could not find tramline tool.""")
+        return trtool.getHumanReadablePath(str(self), self.title)
 
     def manage_beforeDelete(self, item, container):
         """Store the path of file to be deleted in repository for commit time.
@@ -68,14 +73,21 @@ class TramlineFile(File):
 
         path = self.getFullFilename()
         if path:
-            get_txn_manager().toDelete(path)
+            mgr = get_txn_manager()
+            mgr.toDelete(path)
+            hr_path = self.getHumanReadablePath()
+            mgr.toDelete(hr_path)
 
     def manage_afterAdd(self, item, container):
         """Paste part of cut-paste operation."""
         path = self.getFullFilename()
+        hr_path = getToolByName(self, "portal_tramline").makeSymlink(path,
+            str(self), self.title)
+
         if path:
             try:
-                get_txn_manager().unDelete(path)
+                manager = get_txn_manager()
+                manager.unDelete(path, hr_path)
             except KeyError:
                 pass
 
@@ -87,3 +99,4 @@ class TramlineFile(File):
         # Would be more consistent to have the tool return id and path
         # and we'd call the manager from here
         self.update_data(trtool.clone(str(self)))
+

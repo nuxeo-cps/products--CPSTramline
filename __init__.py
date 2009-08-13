@@ -19,10 +19,18 @@
 
 from Products.GenericSetup import profile_registry
 from Products.GenericSetup import EXTENSION
+from Products.CPSCore.upgrade import registerUpgradeCategory
 
 from Products.CPSCore.interfaces import ICPSSite
 
 import widgets
+
+registerUpgradeCategory('cpstramline',
+                        title='CPS Tramline',
+                        floor_version='0.10.0',
+                        ref_product='CPSTramline',
+                        description='Tramline integration',
+                        portal_attribute='upgraded_cpstramline_version')
 
 def initialize(registrar):
 
