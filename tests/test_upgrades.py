@@ -54,8 +54,8 @@ class UpgradesTestCase(CPSTramlineTestCase):
         hr_path = os.path.join(self.tramline_path, HR_AREA)
         os.system('rm -r %s' % hr_path)
         upgrades.add_symlinks_for_all(self.portal)
-        self.assertEquals(os.listdir(hr_path), ['archived-0002.pdf',
-                                                'report-0001.pdf'])
+        self.assertEquals(set(os.listdir(hr_path)),
+                          set(['archived-0002.pdf', 'report-0001.pdf']))
 
 
 def test_suite():
