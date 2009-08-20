@@ -134,9 +134,13 @@ class TramlineTool(UniqueObject, SimpleItemWithProperties):
         '/base/path/human_readable/file_with_no_extension-some_id'
         >>> tool.getHumanReadablePath('some_id', 'report.pdf')
         '/base/path/human_readable/report-some_id.pdf'
+
+        Behaviour with multiple dots
+        >>> tool.getHumanReadablePath('31459', 'manual-4-283587865.1-en.a4.pdf')
+        '/base/path/human_readable/manual-4-283587865.1-en.a4-31459.pdf'
         """
         base = self.getTramlinePath()
-        split = filename.rsplit('.')
+        split = filename.rsplit('.', 1)
         if len(split) == 1:
             filename = '-'.join((filename, tramid))
         else:
