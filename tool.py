@@ -17,6 +17,7 @@
 #
 # $Id: tool.py 973 2008-10-20 07:03:15Z joe $
 
+import logging
 import os
 import errno
 import sys
@@ -39,6 +40,8 @@ from transactional import get_txn_manager
 from interfaces import ITramlineTool
 
 HR_AREA = "human_readable"
+
+logger = logging.getLogger('Products.CPSTramline.tool')
 
 def make_path_relative(ref, target):
     """Makes the absolute target path relative to ref.
@@ -141,7 +144,7 @@ class TramlineTool(UniqueObject, SimpleItemWithProperties):
         return os.path.join(os.path.join(base, HR_AREA, filename))
 
     security.declarePrivate('makeSymlink')
-    def makeSymlink(self, path, tramid, filename, may_exist=False):
+    def makeSymlink(self, path, tramid, filename, may_exist=True):
         """Create a human readable, relative, symlink for the given tramid.
 
         path is the path to the file in the repository
@@ -160,22 +163,18 @@ class TramlineTool(UniqueObject, SimpleItemWithProperties):
         base_dir = os.path.split(newhrpath)[0]
         if not os.path.exists(base_dir):
             os.mkdir(base_dir) # XXX make equivalent of mkdir -p eventually
-        try:
-            os.symlink(make_path_relative(newhrpath, path), newhrpath)
-        except os.error, e:
-            if e.errno != 17:
-                logger.info("Could not create a symlink from %s to %s")
-                raise
-            elif may_exist:
-                logger.debug("File already exists: %s", newhrpath)
-                return None
-            else:
-                raise
+
+        if may_exist:
+            if os.path.islink(newhrpath):
+                logger.info("Symbolic link already exists : %s", newhrpath)
+                return
+        os.symlink(make_path_relative(newhrpath, path), newhrpath)
+
         get_txn_manager().created(newhrpath)
         return newhrpath
 
     security.declarePrivate('makeSymlinkFor')
-    def makeSymlinkFor(self, fobj, may_exist=False):
+    def makeSymlinkFor(self, fobj, may_exist=True):
         """Same as makeSymlink, for a Tramline File object."""
         assert(isinstance(fobj, TramlineFile))
         return self.makeSymlink(fobj.getFullFilename(), str(fobj), fobj.title,

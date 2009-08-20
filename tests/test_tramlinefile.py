@@ -51,6 +51,10 @@ class TramlineFileTestCase(CPSTramlineTestCase):
         realpath = os.path.realpath
         self.assertEquals(realpath(lnpath), realpath(fobj.getFullFilename()))
 
+        # In real life, often that the symlink creation hook is called twice
+        # Test that it reacts properly
+        ttool.makeSymlinkFor(fobj)
+
 def test_suite():
     return unittest.TestSuite((
         unittest.makeSuite(TramlineFileTestCase),
