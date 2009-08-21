@@ -88,7 +88,7 @@ class TransactionManager(AfterCommitSubscriber):
         for path in self._to_del:
             logger.debug("commit: removing file path=%s", path)
             try:
-                if (os.path.isfile(path) or os.path.isling(path)):
+                if (os.path.isfile(path) or os.path.islink(path)):
                     os.remove(path)
                 else:
                     logger.warn("file '%s' doesn't exist", path)
