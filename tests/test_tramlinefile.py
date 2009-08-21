@@ -42,6 +42,9 @@ class TramlineFileTestCase(CPSTramlineTestCase):
         dm['file'] = TramlineFile('file', 'report.pdf', 'some_tramid')
         dm._commit()
         self.fproxy = self.portal.workspaces.the_file
+        # simulate creation of file by tramline within Apache server
+        fd = open(self.fproxy.getContent().file.getFullFilename(), 'w')
+        fd.close()
 
     def testCreation(self):
         ttool = self.portal.portal_tramline
@@ -54,6 +57,32 @@ class TramlineFileTestCase(CPSTramlineTestCase):
         # In real life, often that the symlink creation hook is called twice
         # Test that it reacts properly
         ttool.makeSymlinkFor(fobj)
+
+    def testTitleModification(self):
+        fobj = self.fproxy.getContent().file
+        old_title = fobj.title
+
+        ttool = self.portal.portal_tramline
+        dm = self.fproxy.getContent().getDataModel(proxy=self.fproxy)
+        dm['file'].title = 'newreport.pdf'
+        dm._commit(check_perms=False)
+
+        fobj = self.fproxy.getContent().file
+        lnpath = ttool.getHumanReadablePath(str(fobj), fobj.title)
+        self.assertTrue(os.path.islink(lnpath))
+        realpath = os.path.realpath
+        self.assertEquals(realpath(lnpath), realpath(fobj.getFullFilename()))
+
+        # consistency check: tramline file instance has been replaced, i.e
+        # deletion followed by addition
+        from Products.CPSTramline.transactional import get_txn_manager
+        get_txn_manager().doCommit()
+        self.assertTrue(os.path.islink(lnpath))
+        self.assertTrue(os.path.isfile(fobj.getFullFilename()))
+        self.assertEquals(realpath(lnpath), realpath(fobj.getFullFilename()))
+        # finally, old symlink has been deleted
+        old_lnpath = ttool.getHumanReadablePath(str(fobj), old_title)
+        self.assertFalse(os.path.islink(old_lnpath))
 
 def test_suite():
     return unittest.TestSuite((

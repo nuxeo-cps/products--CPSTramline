@@ -19,6 +19,7 @@
 
 import logging
 
+from Acquisition import aq_base
 from OFS.Image import File
 
 from Products.CMFCore.utils import getToolByName
@@ -26,6 +27,8 @@ from Products.CMFCore.utils import getToolByName
 from transactional import get_txn_manager
 
 log = logging.getLogger('Products.CPSTramline.tramlinefile')
+
+OLD_TITLE_ATTR = '_v_old_title'
 
 class TramlineFile(File):
     """Tramline File object.
@@ -62,14 +65,20 @@ class TramlineFile(File):
         return trtool.getFilePath(str(self))
 
     def getHumanReadablePath(self):
+        """Return the symbolic link path.
+        """
         trtool = getToolByName(self, "portal_tramline", None)
         if trtool is None:
             log.error("Could not find tramline tool.""")
+
         return trtool.getHumanReadablePath(str(self), self.title)
 
     def manage_beforeDelete(self, item, container):
         """Store the path of file to be deleted in repository for commit time.
         """
+
+        # just in case
+        getToolByeName(self, 'portal_tramline').cleanOldSymlinkFor(self)
 
         path = self.getFullFilename()
         if path:
@@ -78,11 +87,20 @@ class TramlineFile(File):
             hr_path = self.getHumanReadablePath()
             mgr.toDelete(hr_path)
 
+    def __setattr__(self, k, v):
+        old = self.__dict__.get(k)
+        File.__setattr__(self, k, v)
+        if k == 'title':
+            # XXX hack because we don't have aq context here to get the tool
+            # this will be cleaned later on (if change is made
+            # through DataModel, this File will be removed and added back)
+            File.__setattr__(self, OLD_TITLE_ATTR, old)
+
     def manage_afterAdd(self, item, container):
         """Paste part of cut-paste operation."""
         path = self.getFullFilename()
-        hr_path = getToolByName(self, "portal_tramline").makeSymlink(path,
-            str(self), self.title)
+        trtool = getToolByName(self, 'portal_tramline')
+        hr_path = trtool.makeSymlinkFor(self)
 
         if path:
             try:
@@ -94,6 +112,7 @@ class TramlineFile(File):
     def manage_afterClone(self, item):
         """Clone the tramline file, and register to txn manager for abort."""
         trtool = getToolByName(self, 'portal_tramline')
+        trtool.cleanOldSymlinkFor(self)
         # Tool takes care of calling the transaction manager
         # Minor code clarity:
         # Would be more consistent to have the tool return id and path

@@ -34,6 +34,7 @@ from Products.CMFCore.utils import UniqueObject
 
 from tramlinepath import id_to_path
 from tramlinefile import TramlineFile
+from tramlinefile import OLD_TITLE_ATTR
 
 from transactional import get_txn_manager
 
@@ -160,8 +161,6 @@ class TramlineTool(UniqueObject, SimpleItemWithProperties):
 
         if may_exist is True, there won't be any error if the link is already
         there; instead, nothing happens.
-
-        TODO: find a way to update symlinks, in a transactional way, moreover.
         """
         newhrpath = self.getHumanReadablePath(tramid, filename)
         base_dir = os.path.split(newhrpath)[0]
@@ -181,8 +180,20 @@ class TramlineTool(UniqueObject, SimpleItemWithProperties):
     def makeSymlinkFor(self, fobj, may_exist=True):
         """Same as makeSymlink, for a Tramline File object."""
         assert(isinstance(fobj, TramlineFile))
+        self.cleanOldSymlinkFor(fobj)
         return self.makeSymlink(fobj.getFullFilename(), str(fobj), fobj.title,
                                 may_exist=may_exist)
+
+    def cleanOldSymlinkFor(self, fobj):
+        """Remove any symlink related to a prior filename"""
+        assert(isinstance(fobj, TramlineFile))
+        fobj = fobj.aq_base
+        old = getattr(fobj, OLD_TITLE_ATTR, None)
+        if not old:
+            return
+
+        get_txn_manager().toDelete( self.getHumanReadablePath(str(fobj), old))
+        delattr(fobj, OLD_TITLE_ATTR)
 
     security.declarePrivate('getFilePath')
     def clone(self, tramid, filename):
