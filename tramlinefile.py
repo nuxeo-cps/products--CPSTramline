@@ -78,7 +78,7 @@ class TramlineFile(File):
         """
 
         # just in case
-        getToolByeName(self, 'portal_tramline').cleanOldSymlinkFor(self)
+        getToolByName(self, 'portal_tramline').cleanOldSymlinkFor(self)
 
         path = self.getFullFilename()
         if path:
@@ -117,5 +117,5 @@ class TramlineFile(File):
         # Minor code clarity:
         # Would be more consistent to have the tool return id and path
         # and we'd call the manager from here
-        self.update_data(trtool.clone(str(self)))
+        self.update_data(trtool.clone(str(self), self.title))
 

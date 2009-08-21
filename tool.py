@@ -219,7 +219,7 @@ class TramlineTool(UniqueObject, SimpleItemWithProperties):
                     continue # one more time
                 raise
             break
-        self.createSymlink(newpath, newid, filename)
+        self.makeSymlink(newpath, newid, filename)
         get_txn_manager().created(newpath)
         return newid
 
