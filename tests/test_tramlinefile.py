@@ -39,16 +39,19 @@ class TramlineFileTestCase(CPSTramlineTestCase):
         wftool.invokeFactoryFor(self.portal.workspaces, 'File', 'the_file')
         fproxy = self.portal.workspaces.the_file
         dm = fproxy.getContent().getDataModel(proxy=fproxy)
-        dm['file'] = TramlineFile('file', 'report.pdf', 'some_tramid')
+        dm['file'] = TramlineFile('file', 'report.pdf', 'some_tramid', size=17L)
         dm._commit()
         self.fproxy = self.portal.workspaces.the_file
+        self.tramfile = self.fproxy.getContent().file
+
         # simulate creation of file by tramline within Apache server
-        fd = open(self.fproxy.getContent().file.getFullFilename(), 'w')
+        fd = open(self.tramfile.getFullFilename(), 'w')
+        fd.write('a' * 17)
         fd.close()
 
     def testCreation(self):
         ttool = self.portal.portal_tramline
-        fobj = self.fproxy.getContent().file
+        fobj = self.tramfile
         lnpath = ttool.getHumanReadablePath(str(fobj), fobj.title)
         self.assertTrue(os.path.islink(lnpath))
         realpath = os.path.realpath
@@ -59,7 +62,7 @@ class TramlineFileTestCase(CPSTramlineTestCase):
         ttool.makeSymlinkFor(fobj)
 
     def testTitleModification(self):
-        fobj = self.fproxy.getContent().file
+        fobj = self.tramfile
         old_title = fobj.title
 
         ttool = self.portal.portal_tramline
@@ -83,6 +86,18 @@ class TramlineFileTestCase(CPSTramlineTestCase):
         # finally, old symlink has been deleted
         old_lnpath = ttool.getHumanReadablePath(str(fobj), old_title)
         self.assertFalse(os.path.islink(old_lnpath))
+
+    def test_size(self):
+        fobj = self.tramfile
+        self.assertEquals(fobj.get_size(), 17L)
+
+        # Resetting
+        fobj._setSize(None)
+        self.assertEquals(fobj.get_size(), 17L)
+
+        # Normal (baseclass, etc.) size setting attempt
+        fobj.size = 666
+        self.assertEquals(fobj.get_size(), 17L)
 
 def test_suite():
     return unittest.TestSuite((

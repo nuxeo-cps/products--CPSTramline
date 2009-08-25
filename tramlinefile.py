@@ -18,6 +18,7 @@
 # $Id: tramlinefile.py 973 2008-10-20 07:03:15Z joe $
 
 import logging
+import os
 
 from Acquisition import aq_base
 from OFS.Image import File
@@ -40,6 +41,12 @@ class TramlineFile(File):
 
     meta_type = "Tramline File"
 
+    def __init__(self, *args, **kwargs):
+        size = kwargs.pop('size', None)
+        File.__init__(self, *args, **kwargs)
+        # Reset size with correct value
+        self._setSize(size)
+
     def index_html(self, REQUEST, RESPONSE):
         """Default view method with Tramline headers."""
         RESPONSE.setHeader('tramline_file','')
@@ -57,12 +64,37 @@ class TramlineFile(File):
 	   REQUEST.environ['HTTP_RANGE'] = 'bytes = 0-'
         return File.index_html(self, REQUEST, RESPONSE)
 
+    def get_size(self):
+        """User level size."""
 
-    def getFullFilename(self):
+        size = getattr(self, 'size', None)
+        if size:
+            return size
+
+        path = self.getFullFilename(allow_tmp=True)
+        if path is None:
+            # tool not available yet. A later call will do it
+            return 0
+
+        try:
+            size = self.size = os.path.getsize(path)
+        except os.error:
+            self.log.error(
+                "OS error while trying to retrieve size of tramline file '%s'",
+                path)
+            return 0
+
+        return size
+
+    # deprecated, use get_size
+    getSize = get_size
+
+    def getFullFilename(self, allow_tmp=False):
         trtool = getToolByName(self, "portal_tramline", None)
         if trtool is None:
             log.error("Could not find tramline tool.""")
-        return trtool.getFilePath(str(self))
+            return
+        return trtool.getFilePath(str(self), allow_tmp=allow_tmp)
 
     def getHumanReadablePath(self):
         """Return the symbolic link path.
@@ -95,6 +127,13 @@ class TramlineFile(File):
             # this will be cleaned later on (if change is made
             # through DataModel, this File will be removed and added back)
             File.__setattr__(self, OLD_TITLE_ATTR, old)
+        elif k == 'size':
+            # Any attempt to set size from base class method will be wrong;
+            # better reset it
+            self._setSize(None)
+
+    def _setSize(self, size):
+            self.__dict__['size'] = size # check __setattr__
 
     def manage_afterAdd(self, item, container):
         """Paste part of cut-paste operation."""

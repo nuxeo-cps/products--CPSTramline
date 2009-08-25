@@ -74,7 +74,9 @@ class TramlineWidgetMixin(object):
             return File(*init)
         else:
             REQUEST.RESPONSE.setHeader('tramline_ok','')
-            return TramlineFile(*init)
+            # A tramline file without aq can't compute its own size.
+            return TramlineFile(*init, **dict(
+                size=self.getFileSize(fileupload)))
 
     def getFileSize(self, fileupload):
         if getattr(fileupload, 'not_tramline', False):
