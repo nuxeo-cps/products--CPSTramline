@@ -82,6 +82,7 @@ class TramlineWidgetMixin(object):
         if getattr(fileupload, 'not_tramline', False):
             return CPSFileWidget.getFileSize(self, fileupload)
         trtool = getToolByName(self, 'portal_tramline')
+        fileupload.seek(0L)
         tramid = fileupload.read()
         self.log.debug("Tramline id: %s", tramid)
         # correct with actual size
