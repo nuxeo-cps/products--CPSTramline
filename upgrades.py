@@ -67,7 +67,8 @@ def recompute_size_for_all(portal):
             fobj.actual_size = None # lazy computation
 	# trigger all computations
 	doc._size = doc._compute_size()
-	logger.debug("Document %s, new size: %ld", doc, doc.get_size()) 
-        # this information is not indexed yet
+	logger.debug("Document %s, new size: %ld", doc, doc.get_size())
+        # size information is not indexed yet
+        done += 1
 
     logger.info("Finished. size of %d documents has been recomputed", done)
