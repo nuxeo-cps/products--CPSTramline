@@ -79,7 +79,7 @@ class TramlineFile(File):
         try:
             size = self.size = os.path.getsize(path)
         except os.error:
-            self.log.error(
+            log.error(
                 "OS error while trying to retrieve size of tramline file '%s'",
                 path)
             return 0

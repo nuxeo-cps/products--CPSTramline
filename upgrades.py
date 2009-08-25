@@ -44,3 +44,28 @@ def add_symlinks_for_all(portal):
                 done += 1
 
     logger.info("Finished. %d symbolic links have been created", done)
+
+def recompute_size_for_all(portal):
+    logger = logging.getLogger(
+        "Products.CPSTramline.upgrades::recompute__size_for_all")
+    logger.info("Scanning all documents in CPS repository f")
+
+    repotool = portal.portal_repository
+    total = len(repotool)
+    done = 0
+    for i, full_id in enumerate(repotool.objectIds()):
+        # objectIds seems to be a kind of iterator
+        if i % 100 == 0:
+            transaction.commit()
+            logger.info("%d out of %d documents upgraded.", i+1, total)
+        doc = repotool[full_id]
+        logger.debug("Doc %s", doc)
+        fobjs = doc.objectValues(['Tramline File'])
+        if not fobjs:
+            continue
+        for fobj in fobjs:
+            fobj.size = None # trigger computation
+        doc._compute_size()
+        # this information is not indexed yet
+
+    logger.info("Finished. size of %d documents has been recomputed", done)
