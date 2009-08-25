@@ -42,10 +42,9 @@ class TramlineFile(File):
     meta_type = "Tramline File"
 
     def __init__(self, *args, **kwargs):
-        size = kwargs.pop('size', None)
+        actual_size = kwargs.pop('actual_size', None)
         File.__init__(self, *args, **kwargs)
-        # Reset size with correct value
-        self._setSize(size)
+        self.actual_size = actual_size
 
     def index_html(self, REQUEST, RESPONSE):
         """Default view method with Tramline headers."""
@@ -67,7 +66,7 @@ class TramlineFile(File):
     def get_size(self):
         """User level size."""
 
-        size = getattr(self, 'size', None)
+        size = getattr(self, 'actual_size', None)
         if size:
             return size
 
@@ -77,7 +76,7 @@ class TramlineFile(File):
             return 0
 
         try:
-            size = self.size = os.path.getsize(path)
+            size = self.actual_size = os.path.getsize(path)
         except os.error:
             log.error(
                 "OS error while trying to retrieve size of tramline file '%s'",
@@ -127,13 +126,6 @@ class TramlineFile(File):
             # this will be cleaned later on (if change is made
             # through DataModel, this File will be removed and added back)
             File.__setattr__(self, OLD_TITLE_ATTR, old)
-        elif k == 'size':
-            # Any attempt to set size from base class method will be wrong;
-            # better reset it
-            self._setSize(None)
-
-    def _setSize(self, size):
-            self.__dict__['size'] = size # check __setattr__
 
     def manage_afterAdd(self, item, container):
         """Paste part of cut-paste operation."""

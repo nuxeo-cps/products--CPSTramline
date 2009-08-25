@@ -64,7 +64,7 @@ def recompute_size_for_all(portal):
         if not fobjs:
             continue
         for fobj in fobjs:
-            fobj.size = None # trigger computation
+            fobj.actual_size = None # trigger computation
         doc._compute_size()
         # this information is not indexed yet
 

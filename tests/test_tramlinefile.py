@@ -39,7 +39,8 @@ class TramlineFileTestCase(CPSTramlineTestCase):
         wftool.invokeFactoryFor(self.portal.workspaces, 'File', 'the_file')
         fproxy = self.portal.workspaces.the_file
         dm = fproxy.getContent().getDataModel(proxy=fproxy)
-        dm['file'] = TramlineFile('file', 'report.pdf', 'some_tramid', size=17L)
+        dm['file'] = TramlineFile('file', 'report.pdf', 'some_tramid',
+                                  actual_size=17L)
         dm._commit()
         self.fproxy = self.portal.workspaces.the_file
         self.tramfile = self.fproxy.getContent().file
@@ -90,13 +91,7 @@ class TramlineFileTestCase(CPSTramlineTestCase):
     def test_size(self):
         fobj = self.tramfile
         self.assertEquals(fobj.get_size(), 17L)
-
-        # Resetting
-        fobj._setSize(None)
-        self.assertEquals(fobj.get_size(), 17L)
-
-        # Normal (baseclass, etc.) size setting attempt
-        fobj.size = 666
+        fobj.actual_size = None
         self.assertEquals(fobj.get_size(), 17L)
 
 def test_suite():

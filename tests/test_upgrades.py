@@ -39,7 +39,7 @@ class UpgradesTestCase(CPSTramlineTestCase):
         wftool.invokeFactoryFor(self.portal.workspaces, 'File', 'the_file')
         fproxy = self.portal.workspaces.the_file
         dm = fproxy.getContent().getDataModel(proxy=fproxy)
-        dm['file'] = TramlineFile('file', 'report.pdf', '0001', size=1L)
+        dm['file'] = TramlineFile('file', 'report.pdf', '0001', actual_size=1L)
         dm._commit()
         fd = open(ttool.getFilePath('0001'), 'w')
         fd.write('a' * 179)
@@ -50,7 +50,8 @@ class UpgradesTestCase(CPSTramlineTestCase):
         wftool.invokeFactoryFor(self.portal.workspaces, 'File', 'archived_file')
         fproxy = self.portal.workspaces.archived_file
         dm = fproxy.getContent().getDataModel(proxy=fproxy)
-        dm['file'] = TramlineFile('file', 'archived.pdf', '0002', size=2L)
+        dm['file'] = TramlineFile('file', 'archived.pdf', '0002',
+                                  actual_size=2L)
         dm._commit()
         fd = open(ttool.getFilePath('0002'), 'w')
         fd.write('b' * 351)
