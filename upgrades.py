@@ -64,8 +64,10 @@ def recompute_size_for_all(portal):
         if not fobjs:
             continue
         for fobj in fobjs:
-            fobj.actual_size = None # trigger computation
-        doc._compute_size()
+            fobj.actual_size = None # lazy computation
+	# trigger all computations
+	doc._size = doc._compute_size()
+	logger.debug("Document %s, new size: %ld", doc, doc.get_size()) 
         # this information is not indexed yet
 
     logger.info("Finished. size of %d documents has been recomputed", done)
