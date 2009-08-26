@@ -1,6 +1,6 @@
 Requires
 ~~~~~~~~
--
+- special version of tramline: svn co https://svn.nuxeo.org/pub/vendor/tramline/branches/gracinet-fix-range/
 New features
 ~~~~~~~~~~~~
 - #1962: include a bigfile profile
