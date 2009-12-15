@@ -1,4 +1,28 @@
 ===========================================================
+Package: CPSTramline 0.11.0
+===========================================================
+First release built by: gracinet at: 2009-12-15T12:27:10
+SVN Tag: https://svn.nuxeo.org/pub/CPS3/products/CPSTramline/tags/0.11.0
+Build from: https://svn.nuxeo.org/pub/CPS3/products/CPSTramline/trunk@54101
+
+Requires
+~~~~~~~~
+- special version of tramline: svn co https://svn.nuxeo.org/pub/vendor/tramline/branches/gracinet-fix-range/
+New features
+~~~~~~~~~~~~
+- #1962: include a bigfile profile
+- #1966: provide a hierarchy of human readable file names
+Bug fixes
+~~~~~~~~~
+- #2018: fix displayed size in listings
+- #2010: work with the ProtectedFile introduced for #1998
+- #1997: provide a "big file" widget in newsitem_flexible
+- #1952: load less from tramline code to avoid confusion in install
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSTramline 0.10.0
 ===========================================================
 First release built by: madarche at: 2008-11-23T21:57:39

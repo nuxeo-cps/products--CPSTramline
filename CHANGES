@@ -1,16 +1,12 @@
 Requires
 ~~~~~~~~
-- special version of tramline: svn co https://svn.nuxeo.org/pub/vendor/tramline/branches/gracinet-fix-range/
+-
 New features
 ~~~~~~~~~~~~
-- #1962: include a bigfile profile
-- #1966: provide a hierarchy of human readable file names
+-
 Bug fixes
 ~~~~~~~~~
-- #2018: fix displayed size in listings
-- #2010: work with the ProtectedFile introduced for #1998
-- #1997: provide a "big file" widget in newsitem_flexible
-- #1952: load less from tramline code to avoid confusion in install
+-
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
