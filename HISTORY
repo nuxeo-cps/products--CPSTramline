@@ -1,4 +1,21 @@
 ===========================================================
+Package: CPSTramline 0.11.1
+===========================================================
+First release built by: gracinet at: 2010-03-13T17:35:06
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- #2123: impossible to publish big files
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSTramline 0.11.0
 ===========================================================
 First release built by: gracinet at: 2009-12-15T12:27:10
