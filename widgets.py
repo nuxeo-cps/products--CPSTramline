@@ -130,6 +130,7 @@ class TramlineEnablerWidget(CPSWidget):
         # of several inputs. This would work if there was an additional
         # split() in tramline/core.py for instance
         return renderHtmlTag('input',
+			     unicode_input=False,	
                              type='hidden',
                              name='tramline_enable',
                              value=' '.join(inputs))
