@@ -3,4 +3,7 @@
   <property name="allowed_content_types" purge="False">
     <element value="Big File"/>
   </property>
+  <property name="auto_content_types">
+    <element value="image/.*:Image:preview" />
+  </property>
 </object>
