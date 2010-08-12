@@ -42,7 +42,14 @@ class TramlineFile(File):
     meta_type = "Tramline File"
 
     def __init__(self, *args, **kwargs):
+        """kwargs:
+           actual_size to specify from the start.
+           creation_context: useful before object is persisted."""
+
         actual_size = kwargs.pop('actual_size', None)
+        creation_context = kwargs.pop('creation_context', None)
+        if creation_context is not None:
+            self._v_creation_context = creation_context
         File.__init__(self, *args, **kwargs)
         self.actual_size = actual_size
 
@@ -91,9 +98,23 @@ class TramlineFile(File):
     def getFullFilename(self, allow_tmp=False):
         trtool = getToolByName(self, "portal_tramline", None)
         if trtool is None:
+            context = getattr(self, '_v_creation_context', None)
+            if context is not None:
+                trtool = getToolByName(context, 'portal_tramline', None)
+
+        if trtool is None:
             log.error("Could not find tramline tool.""")
             return
         return trtool.getFilePath(str(self), allow_tmp=allow_tmp)
+
+    def getFileHandler(self):
+        """Return an open file for the actual filesystem content."""
+        path = self.getFullFilename(allow_tmp=True)
+        if path is None:
+            # tool not available yet (aq problem). Can't proceed
+            raise RuntimeError("Tramline tool not available")
+
+        return open(path) # no exc catching is better here
 
     def getHumanReadablePath(self):
         """Return the symbolic link path.

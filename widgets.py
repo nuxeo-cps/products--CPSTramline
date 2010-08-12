@@ -63,6 +63,8 @@ class TramlineWidgetMixin(object):
 
     log = logging.getLogger('Products.CPSTramline.TramlineWidgetMixin')
 
+    tramline_transient = False
+
     def makeFile(self, filename, fileupload, datastructure):
         init = (self.fields[0], filename, fileupload)
         REQUEST = getattr(self, 'REQUEST', None)
@@ -73,9 +75,11 @@ class TramlineWidgetMixin(object):
             # No access to request from there, default to a good old file
             return File(*init)
         else:
-            REQUEST.RESPONSE.setHeader('tramline_ok','')
+            if not self.tramline_transient:
+                REQUEST.RESPONSE.setHeader('tramline_ok','')
             # A tramline file without aq can't compute its own size.
             return TramlineFile(*init, **dict(
+                creation_context=self, # any aq would do
                 actual_size=self.getFileSize(fileupload)))
 
     def getFileSize(self, fileupload):
@@ -151,4 +155,17 @@ class CPSTramlineFileWidget(TramlineWidgetMixin, CPSFileWidget):
 
 InitializeClass(CPSTramlineFileWidget)
 widgetRegistry.register(CPSTramlineFileWidget)
+
+class CPSTransientTramlineFileWidget(TramlineWidgetMixin, CPSFileWidget):
+    """Tramline enhanced, but no persistence in tramline repository.
+
+    Useful for big uploads that aren't stored, like zip files that get
+    unpacked, used for automatic content creation, and must be dropped
+    afterwards.
+    """
+    meta_type = "Transient Tramline File Widget"
+    tramline_transient = True
+
+InitializeClass(CPSTransientTramlineFileWidget)
+widgetRegistry.register(CPSTransientTramlineFileWidget)
 
