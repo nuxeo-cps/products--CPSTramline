@@ -150,3 +150,27 @@ class TramlineFile(File):
         # and we'd call the manager from here
         self.update_data(trtool.clone(str(self), self.title))
 
+    @classmethod
+    def create(self, oid, title, data, context=None, size_threshold=0):
+        """Create either TramlineFile or File according to threshold.
+
+        context is mandatory (kwarg for upstream code clarity/ease only)
+        The actual file in tramline repository is also created.
+        The size treshold avoids littering the repository with tiny files.
+        """
+
+        if context is None:
+            # even if we end up creating an OFS File this time, this is a fault
+            raise ValueError("Need context")
+
+        trtool = getToolByName(context, 'portal_tramline', None)
+        # trtool being None means that tramline is not installed !
+        # a contrario, if tramlinetool is there, all automatic content
+        # (see #2205) must be tramline capable (ie use tramline aware widgets)
+        # NB: stream not supported by trtool.create hence len is ok for now
+        if trtool is None or size_threshold > len(data):
+            return File(oid, title, data)
+
+        tramid, size = trtool.create(title, data)
+        return TramlineFile(oid, title, tramid, actual_size=size)
+

@@ -25,6 +25,13 @@ from Products.CPSCore.interfaces import ICPSSite
 
 import widgets
 
+# registration for auto content creation (#2205, #2208)
+from tramlinefile import TramlineFile
+from Products.CPSSchemas.BasicFields import CPSFileField
+from Products.CPSDocument.createFile import FileObjectFactory
+FileObjectFactory.methods[CPSFileField.meta_type] = (
+    TramlineFile.create, dict(context=True, size_threshold=40960)) # 40 kB
+
 registerUpgradeCategory('cpstramline',
                         title='CPS Tramline',
                         floor_version='0.10.0',
