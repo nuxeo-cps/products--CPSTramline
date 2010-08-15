@@ -26,6 +26,8 @@ import os
 
 from Products.CPSTramline.tool import TramlineTool
 
+TEST_DATA_PATH = os.path.join(os.path.split(__file__)[0], 'data')
+
 class TramlineMixin:
     """Test case providing fixture with a tramline repository."""
 
@@ -57,8 +59,10 @@ class TramlineTestCase(TramlineMixin, unittest.TestCase):
 
 class ZopeTramlineTestCase(TramlineMixin, ZopeTestCase):
 
-    def afterSetup(self):
+    def afterSetUp(self):
         self.createToolAndHierarchy()
+        self.folder._setObject('portal_tramline', self.tool)
+        self.tool = self.folder.portal_tramline
 
     def beforeTearDown(self):
         self.removeHierarchy()

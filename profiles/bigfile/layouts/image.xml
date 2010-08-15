@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<object name="image" meta_type="CPS Layout">
+
+ <widget name="preview" meta_type="Tramline Image Widget">
+  <property name="fields">
+   <element value="preview"/>
+  </property>
+  <property name="size_max">0</property>
+ </widget>
+
+</object>

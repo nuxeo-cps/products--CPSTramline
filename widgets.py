@@ -31,7 +31,7 @@ from Products.CPSSchemas.Widget import widgetRegistry
 from Products.CPSSchemas import BasicWidgets
 
 from Products.CPSSchemas.Widget import CPSWidget
-from Products.CPSSchemas.BasicWidgets import CPSFileWidget
+from Products.CPSSchemas.BasicWidgets import CPSFileWidget, CPSImageWidget
 from Products.CPSSchemas.ExtendedWidgets import CPSAttachedFileWidget
 
 from tramlinefile import TramlineFile
@@ -155,6 +155,40 @@ class CPSTramlineFileWidget(TramlineWidgetMixin, CPSFileWidget):
 
 InitializeClass(CPSTramlineFileWidget)
 widgetRegistry.register(CPSTramlineFileWidget)
+
+class CPSTramlineImageWidget(TramlineWidgetMixin, CPSImageWidget):
+    """Tramline enhanced."""
+    meta_type = "Tramline Image Widget"
+
+    def makeFile(self, filename, fileupload, datastructure):
+        init = (self.fields[0], filename, fileupload)
+        REQUEST = getattr(self, 'REQUEST', None)
+
+        ### XXX could have tramline add something to file's Content-Dispo
+        ### and check that
+        if REQUEST is None:
+            # No access to request from there, default to a good old file
+            image = Image(*init)
+        else:
+            if not self.tramline_transient:
+                REQUEST.RESPONSE.setHeader('tramline_ok','')
+            # A tramline file without aq can't compute its own size.
+            image = TramlineImage(*init, **dict(
+                creation_context=self, # any aq would do
+                actual_size=self.getFileSize(fileupload)))
+
+        if self.allow_resize: # TODO resize part wouldn't work and is obsolete
+            self.maybeKeepOriginal(image, datastructure)
+            resize_op = datastructure[self.getWidgetId() + '_resize']
+            result = self.getResizedImage(image, filename, resize_op)
+            if result is not None:
+                image = result
+        return image
+        
+
+
+InitializeClass(CPSTramlineImageWidget)
+widgetRegistry.register(CPSTramlineImageWidget)
 
 class CPSTransientTramlineFileWidget(TramlineWidgetMixin, CPSFileWidget):
     """Tramline enhanced, but no persistence in tramline repository.

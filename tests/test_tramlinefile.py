@@ -21,13 +21,9 @@ import unittest
 from tramlinetestcase import CPSTramlineTestCase
 
 import os
-from Products.CPSTramline.tramlinefile import TramlineFile
+from Products.CPSTramline.tramlinefile import TramlineFile, TramlineImage
 
 class TramlineFileTestCase(CPSTramlineTestCase):
-
-    def clearTestRepo(self):
-        # Make platform-indepent ?
-        os.system('rm -r %s' % TESTREPO)
 
     def afterSetUp(self):
         CPSTramlineTestCase.afterSetUp(self)
@@ -93,6 +89,7 @@ class TramlineFileTestCase(CPSTramlineTestCase):
         self.assertEquals(fobj.get_size(), 17L)
         fobj.actual_size = None
         self.assertEquals(fobj.get_size(), 17L)
+
 
 def test_suite():
     return unittest.TestSuite((
