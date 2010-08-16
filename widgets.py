@@ -43,7 +43,7 @@ TRAMLINE_DS_KEY = '_tramline_inputs'
 
 register_js_method('jquery', 'jquery.js')
 register_js_method('fupload', 'jquery.fileupload.js')
-register_js_method('fupload.auto', 'jquery.fileupload.js')
+register_js_method('fupload.auto', 'jquery.fileupload.auto.js')
 
 # Patch to recognize file uploads built from preexisting OFS.File instances
 def makeTramlineFileUpload(ofsfile):
@@ -69,6 +69,7 @@ class TramlineWidgetMixin(object):
     log = logging.getLogger('Products.CPSTramline.TramlineWidgetMixin')
 
     tramline_transient = False
+    progress_bar = True
 
     def makeFile(self, filename, fileupload, datastructure):
         init = (self.fields[0], filename, fileupload)
