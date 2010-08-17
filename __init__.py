@@ -32,7 +32,7 @@ registerDirectory('skins', globals())
 # registration for auto content creation (#2205, #2208)
 from tramlinefile import TramlineFile, TramlineImage
 from Products.CPSSchemas.BasicFields import CPSFileField, CPSImageField
-from Products.CPSDocument.createFile import FileObjectFactory
+from Products.CPSDocument.bulkcreate import FileObjectFactory
 FileObjectFactory.methods[CPSFileField.meta_type] = (
     TramlineFile.create, dict(context=True, size_threshold=40960)) # 40 kB
 FileObjectFactory.methods[CPSImageField.meta_type] = (
