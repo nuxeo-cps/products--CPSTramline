@@ -26,6 +26,7 @@ from OFS.Image import File
 from Products.CMFCore.utils import getToolByName
 
 from Products.CPSUtil.html import renderHtmlTag
+from Products.CPSUtil.resourceregistry import register_js_method
 from Products.CPSSchemas.Widget import widgetRegistry
 
 from Products.CPSSchemas import BasicWidgets
@@ -39,6 +40,10 @@ from tramlinefile import TramlineFile
 from Products.CPSUtil.file import makeFileUploadFromOFSFile
 
 TRAMLINE_DS_KEY = '_tramline_inputs'
+
+register_js_method('jquery', 'jquery.js')
+register_js_method('fupload', 'jquery.fileupload.js')
+register_js_method('fupload.auto', 'jquery.fileupload.js')
 
 # Patch to recognize file uploads built from preexisting OFS.File instances
 def makeTramlineFileUpload(ofsfile):
@@ -105,6 +110,14 @@ class TramlineWidgetMixin(object):
         # first in multi-inheritance applications, there's no ambiguity with 
         # super(). See http://fuhm.net/super-harmful for explanation
         super(TramlineWidgetMixin, self).prepare(ds, **kw)
+
+    def render(self, mode, ds, **kw):
+        if mode == 'edit' and self.progress_bar:
+            self.requireResource('jquery')
+            self.requireResource('fupload')
+            self.requireResource('fupload.auto')
+        return super(TramlineWidgetMixin, self).render(mode, ds, **kw)
+
 
 class TramlineEnablerWidget(CPSWidget):
     """Used to render a hidden input for tramline enabling."""
