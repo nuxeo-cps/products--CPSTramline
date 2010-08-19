@@ -21,9 +21,13 @@ from Products.GenericSetup import profile_registry
 from Products.GenericSetup import EXTENSION
 from Products.CPSCore.upgrade import registerUpgradeCategory
 
+from Products.CMFCore.DirectoryView import registerDirectory
+
 from Products.CPSCore.interfaces import ICPSSite
 
 import widgets
+
+registerDirectory('skins', globals())
 
 # registration for auto content creation (#2205, #2208)
 from tramlinefile import TramlineFile, TramlineImage

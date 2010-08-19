@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<object name="portal_skins">
+ <object name="gp_fileupload" meta_type="Filesystem Directory View"
+    directory="CPSTramline/skins/gp_fileupload"/>
+ <skin-path name="CPSSkins">
+  <layer name="gp_fileupload" insert-after="custom"/>
+ </skin-path>
+ <skin-path name="CPSSkins-macroless">
+  <layer name="gp_fileupload" insert-after="custom"/>
+ </skin-path>
+</object>
