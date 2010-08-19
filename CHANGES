@@ -3,11 +3,11 @@ Requires
 -
 New features
 ~~~~~~~~~~~~
-- #1962: include a bigfile profile
+- #2205: tramlinefile creation from backend
+- #2210: Tramline images
 Bug fixes
 ~~~~~~~~~
-= #1997: provide a "big file" widget in newsitem_flexible
-- #1952: load less from tramline code to avoid confusion in install
+-
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 

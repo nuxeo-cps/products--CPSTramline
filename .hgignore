@@ -1,0 +1,12 @@
+syntax:glob
+# filled as subpath from another repo
+# by hgbundler
+tramlinepath
+
+# usual stuff
+*\#
+*.\#*
+*~
+*.pyo
+*.orig
+*.pyc

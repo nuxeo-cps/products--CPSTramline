@@ -17,14 +17,15 @@
 #
 # $Id: __init__.py 973 2008-10-20 07:03:15Z joe $
 
-import unittest 
+import unittest
+from zope.testing import doctest
 
 from tramlinetestcase import TramlineTestCase
 
 class TramlineToolTestCase(TramlineTestCase):
 
     def testProperties(self):
-        self.tool.manage_changeProperties(tramlinepath='/some/path', 
+        self.tool.manage_changeProperties(tramlinepath='/some/path',
                                           relative=False)
         self.assertEquals(self.tool.getTramlinePath(), '/some/path')
 
@@ -38,7 +39,9 @@ class TramlineToolTestCase(TramlineTestCase):
 
 def test_suite():
     return unittest.TestSuite((
+        doctest.DocTestSuite('Products.CPSTramline.tool',
+                             optionflags=doctest.NORMALIZE_WHITESPACE),
         unittest.makeSuite(TramlineToolTestCase),
         ))
 
-        
+

@@ -59,23 +59,20 @@ class TransactionManager(AfterCommitSubscriber):
         logger.debug("registering for deletion: %s", path)
         self._to_del.add(path)
 
-    def unDelete(self, path):
+    def unDelete(self, *paths):
         """Unregister a path."""
         if not self.enabled:
             logger.debug("is DISABLED. path '%s' won't be processed", path)
             return
 
-        try:
-            self._to_del.remove(path)
-        except KeyError:
-            pass
-        else:
+        for path in paths:
+            self._to_del.discard(path)
             logger.debug("UNregistering deletion of: %s", path)
 
-    def created(self, path):
+    def created(self, *paths):
         """Register a path as created within the transaction."""
-        logger.debug("registering created: %s", path)
-        self._created.add(path)
+        logger.debug("registering created paths: %s", paths)
+        self._created.update(paths)
 
     def __call__(self, status=False):
         """Called when transaction has committed.
@@ -91,7 +88,7 @@ class TransactionManager(AfterCommitSubscriber):
         for path in self._to_del:
             logger.debug("commit: removing file path=%s", path)
             try:
-                if (os.path.isfile(path)):
+                if (os.path.isfile(path) or os.path.islink(path)):
                     os.remove(path)
                 else:
                     logger.warn("file '%s' doesn't exist", path)
