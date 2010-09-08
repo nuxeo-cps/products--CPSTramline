@@ -35,7 +35,7 @@ from Products.CPSSchemas.Widget import CPSWidget
 from Products.CPSSchemas.BasicWidgets import CPSFileWidget, CPSImageWidget
 from Products.CPSSchemas.ExtendedWidgets import CPSAttachedFileWidget
 
-from tramlinefile import TramlineFile
+from tramlinefile import TramlineFile, TramlineImage
 
 from Products.CPSUtil.file import makeFileUploadFromOFSFile
 
