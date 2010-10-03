@@ -20,9 +20,14 @@
 import logging
 import os
 
-from Acquisition import aq_base
-from OFS.Image import File
+try:
+    import PIL.Image
+    PIL_OK = True
+except ImportError:
+    PIL_OK = False
 
+from Acquisition import aq_base
+from OFS.Image import Image, File
 from Products.CMFCore.utils import getToolByName
 
 from transactional import get_txn_manager
@@ -41,8 +46,17 @@ class TramlineFile(File):
 
     meta_type = "Tramline File"
 
+    OFSClass = File
+
     def __init__(self, *args, **kwargs):
+        """kwargs:
+           actual_size to specify from the start.
+           creation_context: useful before object is persisted."""
+
         actual_size = kwargs.pop('actual_size', None)
+        creation_context = kwargs.pop('creation_context', None)
+        if creation_context is not None:
+            self._v_creation_context = creation_context
         File.__init__(self, *args, **kwargs)
         self.actual_size = actual_size
 
@@ -91,9 +105,23 @@ class TramlineFile(File):
     def getFullFilename(self, allow_tmp=False):
         trtool = getToolByName(self, "portal_tramline", None)
         if trtool is None:
+            context = getattr(self, '_v_creation_context', None)
+            if context is not None:
+                trtool = getToolByName(context, 'portal_tramline', None)
+
+        if trtool is None:
             log.error("Could not find tramline tool.""")
             return
         return trtool.getFilePath(str(self), allow_tmp=allow_tmp)
+
+    def getFileHandler(self):
+        """Return an open file for the actual filesystem content."""
+        path = self.getFullFilename(allow_tmp=True)
+        if path is None:
+            # tool not available yet (aq problem). Can't proceed
+            raise RuntimeError("Tramline tool not available")
+
+        return open(path) # no exc catching is better here
 
     def getHumanReadablePath(self):
         """Return the symbolic link path.
@@ -150,3 +178,73 @@ class TramlineFile(File):
         # and we'd call the manager from here
         self.update_data(trtool.clone(str(self), self.title))
 
+    @classmethod
+    def create(self, oid, title, data, context=None, size_threshold=0):
+        """Create either TramlineFile or File according to threshold.
+
+        context is mandatory (kwarg for upstream code clarity/ease only)
+        The actual file in tramline repository is also created.
+        The size treshold avoids littering the repository with tiny files.
+        """
+
+        if context is None:
+            # even if we end up creating an OFS File this time, this is a fault
+            raise ValueError("Need context")
+
+        trtool = getToolByName(context, 'portal_tramline', None)
+        # trtool being None means that tramline is not installed !
+        # a contrario, if tramlinetool is there, all automatic content
+        # (see #2205) must be tramline capable (ie use tramline aware widgets)
+        # NB: stream not supported by trtool.create hence len is ok for now
+        if trtool is None or size_threshold > len(data):
+            return self.OFSClass(oid, title, data)
+
+        tramid, size = trtool.create(title, data)
+        return self(oid, title, tramid, actual_size=size, creation_context=context)
+
+class TramlineImage(TramlineFile, Image):
+
+    meta_type = 'Tramline Image'
+
+    OFSClass = Image
+
+    # private
+    update_data__roles__=()
+    def update_data(self, data, content_type=None, size=None):
+        """As OFS.Image, this extracts content type, height and weight
+
+        Differences: knows that data is just the tramid,
+        The passed size are for File objects and is the tramid length
+        if and only if getActualSize does not work.
+        """
+        File.update_data(self, data, content_type=content_type, size=size)
+
+        f = self.getFileHandler()
+        ct, width, height = getImageInfoFromFile(f)
+        f.close() # never hurts
+        if ct:
+            content_type = ct
+        if width >= 0 and height >= 0:
+            self.width = width
+            self.height = height
+
+        # Now we should have the correct content type, or still None
+        if content_type is not None: self.content_type = content_type
+
+        self.ZCacheable_invalidate()
+        self.ZCacheable_set(None)
+        self.http__refreshEtag()
+
+def getImageInfoFromFile(f):
+    """Same as OFS.Image, working on a python file object.
+
+    Leverages the stronger PIL if available.
+    Remark: OFS.Image.File does not load all of the image in RAM for that
+    purpose (self.data is just the first chunk, that's 2^16, still a lot).
+    """
+    if PIL_OK:
+        img = PIL.Image.open(f)
+        return ('image/' + img.format.lower(), ) + img.size
+
+    data = f.read(24) # Same length as ImageWidget uses
+    return OFS.Image.getImageInfo(data)

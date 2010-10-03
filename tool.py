@@ -22,6 +22,7 @@ import os
 import errno
 import sys
 import random
+from tempfile import mkstemp
 
 from AccessControl import ClassSecurityInfo
 from Globals import InitializeClass
@@ -195,16 +196,11 @@ class TramlineTool(UniqueObject, SimpleItemWithProperties):
         get_txn_manager().toDelete( self.getHumanReadablePath(str(fobj), old))
         delattr(fobj, OLD_TITLE_ATTR)
 
-    security.declarePrivate('getFilePath')
-    def clone(self, tramid, filename):
-        """Clone the file in repository with given id.
+    security.declarePrivate('_link')
+    def _link(self, path):
+        """Make a guaranteed new (hard) link in repo for file at path.
 
-        This is done by a hard link, so that
-          - it's cheap,
-          - one can be deleted without impact on the other
-          - we get a gc for free thanks to the os.
-
-        filename is been used to create the human-readable symbolic link
+        Return tramid, newpath
         """
         while True:
             newid = str(random.randrange(sys.maxint))
@@ -213,14 +209,51 @@ class TramlineTool(UniqueObject, SimpleItemWithProperties):
             if os.path.exists(newpath):
                 continue
             try:
-                os.link(self.getFilePath(tramid), newpath)
+                os.link(path, newpath)
             except os.error, e:
                 if e.errno == errno.EEXIST:
                     continue # one more time
                 raise
-            break
+            return newid, newpath
+
+    security.declarePrivate('getFilePath')
+    def clone(self, tramid, filename):
+        """Clone the file in repository with given id.
+
+        This is done by a hard link, so that
+          - it's cheap,
+          - one can be deleted without impact on the other,
+          - we get a gc for free thanks to the os.
+
+        filename is been used to create the human-readable symbolic link
+        """
+        newid, newpath = self._link(self.getFilePath(tramid))
         self.makeSymlink(newpath, newid, filename)
         get_txn_manager().created(newpath)
         return newid
+
+    security.declarePrivate('create')
+    def create(self, filename, data):
+        """Create a file in the repository from raw data.
+        Return tramline id, actual size as observed on fs
+
+        Returning the size will be important if data can be a stream,
+        which is not currently the case.
+        """
+
+        # Dumping in 2 steps to avoid race condition on tramline ids
+        fd, tmppath = mkstemp(dir=self.getTramlinePath())
+        f = os.fdopen(fd, 'w')
+        f.write(data)
+        f.close()
+
+        newid, newpath = self._link(tmppath)
+        os.chmod(tmppath, 0660)
+        os.unlink(tmppath)
+
+        get_txn_manager().created(newpath)
+        self.makeSymlink(newpath, newid, filename)
+
+        return newid, os.path.getsize(newpath)
 
 InitializeClass(TramlineTool)

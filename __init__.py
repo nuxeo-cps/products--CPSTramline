@@ -21,9 +21,22 @@ from Products.GenericSetup import profile_registry
 from Products.GenericSetup import EXTENSION
 from Products.CPSCore.upgrade import registerUpgradeCategory
 
+from Products.CMFCore.DirectoryView import registerDirectory
+
 from Products.CPSCore.interfaces import ICPSSite
 
 import widgets
+
+registerDirectory('skins', globals())
+
+# registration for auto content creation (#2205, #2208)
+from tramlinefile import TramlineFile, TramlineImage
+from Products.CPSSchemas.BasicFields import CPSFileField, CPSImageField
+from Products.CPSDocument.bulkcreate import FileObjectFactory
+FileObjectFactory.methods[CPSFileField.meta_type] = (
+    TramlineFile.create, dict(context=True, size_threshold=40960)) # 40 kB
+FileObjectFactory.methods[CPSImageField.meta_type] = (
+    TramlineImage.create, dict(context=True, size_threshold=40960)) # 40 kB
 
 registerUpgradeCategory('cpstramline',
                         title='CPS Tramline',
