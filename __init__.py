@@ -33,6 +33,12 @@ registerDirectory('skins', globals())
 from tramlinefile import TramlineFile, TramlineImage
 from Products.CPSSchemas.BasicFields import CPSFileField, CPSImageField
 from Products.CPSDocument.bulkcreate import FileObjectFactory
+
+# GR this was done for #2205. This looks wrong but isn't
+# Namely, one could think that this leads to TramlineFile object creations
+# for portals that are not tramline enabled (wrong), but actually, the create
+# classmethod degrades gracefully to good old OFS.Image objects if the
+# tramline tool is not there (right).
 FileObjectFactory.methods[CPSFileField.meta_type] = (
     TramlineFile.create, dict(context=True, size_threshold=40960)) # 40 kB
 FileObjectFactory.methods[CPSImageField.meta_type] = (
