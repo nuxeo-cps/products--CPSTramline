@@ -58,14 +58,13 @@ def initialize(registrar):
         for_=ICPSSite)
 
     profile_registry.registerProfile(
-        'default',
-        'CPS Tramline Default',
-        "Full CPS Tramline default integration.",
-        'profiles/default',
+        'cpsdefault-all',
+        'CPS Tramline Full for CPSDefault',
+        "Full CPS Tramline integration for the whole of CPSDefault",
+        'profiles/cpsdefault-all',
         'CPSTramline',
         EXTENSION,
         for_=ICPSSite)
-
 
     profile_registry.registerProfile(
         'bigfile',
