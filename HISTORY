@@ -1,4 +1,22 @@
 ===========================================================
+Package: CPSTramline 0.13.0
+===========================================================
+First release built by: gracinet at: 2010-10-13T11:45:45
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+- #2205: tramlinefile creation from backend
+- #2210: Tramline images
+Bug fixes
+~~~~~~~~~
+-
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSTramline 0.12.0
 ===========================================================
 First release built by: gracinet at: 2010-07-23T02:11:26
