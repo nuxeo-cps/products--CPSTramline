@@ -192,11 +192,19 @@ class TramlineFile(File):
             raise ValueError("Need context")
 
         trtool = getToolByName(context, 'portal_tramline', None)
+        if isinstance(data, file):
+            try:
+                data.seek(0, 2) # os.SEEK_END not available in python 2.4
+                size = data.tell()
+                data.seek(0)
+            except OSError: # not much can be done for special files
+                size = 0
+        else:
+            size = len(data)
         # trtool being None means that tramline is not installed !
         # a contrario, if tramlinetool is there, all automatic content
         # (see #2205) must be tramline capable (ie use tramline aware widgets)
-        # NB: stream not supported by trtool.create hence len is ok for now
-        if trtool is None or size_threshold > len(data):
+        if trtool is None or size_threshold > size:
             return self.OFSClass(oid, title, data)
 
         tramid, size = trtool.create(title, data)
