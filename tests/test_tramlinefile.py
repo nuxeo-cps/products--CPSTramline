@@ -35,16 +35,19 @@ class TramlineFileTestCase(CPSTramlineTestCase):
         wftool.invokeFactoryFor(self.portal.workspaces, 'File', 'the_file')
         fproxy = self.portal.workspaces.the_file
         dm = fproxy.getContent().getDataModel(proxy=fproxy)
-        dm['file'] = TramlineFile('file', 'report.pdf', 'some_tramid',
-                                  actual_size=17L)
+        dm['file'] = tramfile = TramlineFile('file', 'report.pdf',
+                                             'some_tramid',
+                                             actual_size=17L,
+                                             creation_context=fproxy)
+        # simulate creation of file by tramline within Apache server
+        fd = open(tramfile.getFullFilename(), 'w')
+        fd.write('a' * 17)
+        fd.close()
+
         dm._commit()
         self.fproxy = self.portal.workspaces.the_file
         self.tramfile = self.fproxy.getContent().file
 
-        # simulate creation of file by tramline within Apache server
-        fd = open(self.tramfile.getFullFilename(), 'w')
-        fd.write('a' * 17)
-        fd.close()
 
     def testCreation(self):
         ttool = self.portal.portal_tramline

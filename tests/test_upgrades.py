@@ -39,11 +39,12 @@ class UpgradesTestCase(CPSTramlineTestCase):
         wftool.invokeFactoryFor(self.portal.workspaces, 'File', 'the_file')
         fproxy = self.portal.workspaces.the_file
         dm = fproxy.getContent().getDataModel(proxy=fproxy)
-        dm['file'] = TramlineFile('file', 'report.pdf', '0001', actual_size=1L)
-        dm._commit()
+        dm['file'] = TramlineFile('file', 'report.pdf', '0001',
+                                  actual_size=1L, creation_context=fproxy)
         fd = open(ttool.getFilePath('0001'), 'w')
         fd.write('a' * 179)
         fd.close()
+        dm._commit()
         self.normal_doc = fproxy.getContent()
 
         # an archived file: present in CPS' repository, but no proxy
@@ -51,11 +52,11 @@ class UpgradesTestCase(CPSTramlineTestCase):
         fproxy = self.portal.workspaces.archived_file
         dm = fproxy.getContent().getDataModel(proxy=fproxy)
         dm['file'] = TramlineFile('file', 'archived.pdf', '0002',
-                                  actual_size=2L)
-        dm._commit()
+                                  actual_size=2L, creation_context=fproxy)
         fd = open(ttool.getFilePath('0002'), 'w')
         fd.write('b' * 351)
         fd.close()
+        dm._commit()
         self.archived_doc = fproxy.getContent()
         self.portal.workspaces.manage_delObjects(['archived_file'])
 
