@@ -244,7 +244,16 @@ class TramlineTool(UniqueObject, SimpleItemWithProperties):
         # Dumping in 2 steps to avoid race condition on tramline ids
         fd, tmppath = mkstemp(dir=self.getTramlinePath())
         f = os.fdopen(fd, 'w')
-        f.write(data)
+        if isinstance(data, str):
+            f.write(data)
+        else: # file-like object
+            data.seek(0L)
+            while True:
+                chunk = data.read(65536)
+                if not chunk:
+                    break
+                f.write(chunk)
+
         f.close()
 
         newid, newpath = self._link(tmppath)
