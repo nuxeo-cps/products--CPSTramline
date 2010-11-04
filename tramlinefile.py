@@ -179,7 +179,7 @@ class TramlineFile(File):
         self.update_data(trtool.clone(str(self), self.title))
 
     @classmethod
-    def create(self, oid, title, data, context=None, size_threshold=0):
+    def create(self, oid, title, data, context=None, size_threshold=0, **kw):
         """Create either TramlineFile or File according to threshold.
 
         context is mandatory (kwarg for upstream code clarity/ease only)
@@ -200,7 +200,7 @@ class TramlineFile(File):
             return self.OFSClass(oid, title, data)
 
         tramid, size = trtool.create(title, data)
-        return self(oid, title, tramid, actual_size=size, creation_context=context)
+        return self(oid, title, tramid, actual_size=size, creation_context=context, **kw)
 
 class TramlineImage(TramlineFile, Image):
 
