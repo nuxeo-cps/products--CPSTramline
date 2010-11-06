@@ -21,6 +21,8 @@ import unittest
 from tramlinetestcase import CPSTramlineTestCase
 
 import os
+import tempfile
+from OFS.Image import File
 from Products.CPSTramline.tramlinefile import TramlineFile, TramlineImage
 
 class TramlineFileTestCase(CPSTramlineTestCase):
@@ -47,7 +49,7 @@ class TramlineFileTestCase(CPSTramlineTestCase):
         dm._commit()
         self.fproxy = self.portal.workspaces.the_file
         self.tramfile = self.fproxy.getContent().file
-
+        self.ttool = self.portal.portal_tramline
 
     def testCreation(self):
         ttool = self.portal.portal_tramline
@@ -60,6 +62,31 @@ class TramlineFileTestCase(CPSTramlineTestCase):
         # In real life, often that the symlink creation hook is called twice
         # Test that it reacts properly
         ttool.makeSymlinkFor(fobj)
+
+    def testCreateClassMethod(self):
+        # From str, too small
+        tf = TramlineFile.create('tf_id', '', 'small', size_threshold=6,
+                                 context=self.portal)
+        self.assertTrue(isinstance(tf, File))
+
+        # From str, big enough
+        tf = TramlineFile.create('tf_id', '', 'big enough', size_threshold=6,
+                                 context=self.portal)
+        self.assertTrue(isinstance(tf, TramlineFile))
+        fh = open(tf.getFullFilename(), 'r')
+        self.assertEquals(fh.read(), 'big enough')
+        fh.close()
+
+        # from a real FS file. Must work even if unlinked
+        tmp = tempfile.TemporaryFile() # on *nix, this is unlinked
+        tmp.write('big enough') # no seek(0)
+
+        tf = TramlineFile.create('tf_id', '', tmp, size_threshold=6,
+                                 context=self.portal)
+        self.assertTrue(isinstance(tf, TramlineFile))
+        fh = open(tf.getFullFilename(), 'r')
+        self.assertEquals(fh.read(), 'big enough')
+        fh.close()
 
     def testTitleModification(self):
         fobj = self.tramfile
