@@ -26,7 +26,7 @@ from OFS.Image import File
 from Products.CMFCore.utils import getToolByName
 
 from Products.CPSUtil.html import renderHtmlTag
-from Products.CPSUtil.resourceregistry import register_js_method
+from Products.CPSUtil.resourceregistry import JSGlobalMethodResource
 from Products.CPSSchemas.Widget import widgetRegistry
 
 from Products.CPSSchemas import BasicWidgets
@@ -41,9 +41,12 @@ from Products.CPSUtil.file import makeFileUploadFromOFSFile
 
 TRAMLINE_DS_KEY = '_tramline_inputs'
 
-register_js_method('jquery', 'jquery.js')
-register_js_method('fupload', 'jquery.fileupload.js')
-register_js_method('fupload.auto', 'jquery.fileupload.auto.js')
+register_js = JSGlobalMethodResource.register
+
+JQUERY_RSRC = register_js('jquery.js')
+FUPLOAD_RSRC = register_js('jquery.fileupload.js', depends=JQUERY_RSRC)
+FUPLOAD_AUTO_RSRC = register_js('jquery.fileupload.auto.js',
+                                depends=FUPLOAD_RSRC)
 
 # Patch to recognize file uploads built from preexisting OFS.File instances
 def makeTramlineFileUpload(ofsfile):
@@ -114,9 +117,7 @@ class TramlineWidgetMixin(object):
 
     def render(self, mode, ds, **kw):
         if mode == 'edit' and self.progress_bar:
-            self.requireResource('jquery')
-            self.requireResource('fupload')
-            self.requireResource('fupload.auto')
+            self.requireResource(FUPLOAD_AUTO_RSRC)
         return super(TramlineWidgetMixin, self).render(mode, ds, **kw)
 
 
