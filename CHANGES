@@ -6,8 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
-- #2271: adapted to move of FileObjectFactory to CPSSchemas
-- #2224: direct creation of files in repo from a file-like object
+-
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
