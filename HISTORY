@@ -1,4 +1,22 @@
 ===========================================================
+Package: CPSTramline 0.13.1
+===========================================================
+First release built by: gracinet at: 2010-11-27T04:17:02
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- #2271: adapted to move of FileObjectFactory to CPSSchemas
+- #2224: direct creation of files in repo from a file-like object
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSTramline 0.13.0
 ===========================================================
 First release built by: gracinet at: 2010-10-13T11:45:45
