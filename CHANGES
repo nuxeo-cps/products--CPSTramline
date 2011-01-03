@@ -6,7 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
--
+- #2316: lift the size limits in cpsdefault_all profile
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
