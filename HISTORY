@@ -1,4 +1,21 @@
 ===========================================================
+Package: CPSTramline 0.13.2
+===========================================================
+First release built by: gracinet at: 2011-01-04T02:43:17
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- #2316: lift the size limits in cpsdefault_all profile
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSTramline 0.13.1
 ===========================================================
 First release built by: gracinet at: 2010-11-27T04:17:02
