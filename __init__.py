@@ -26,8 +26,19 @@ from Products.CMFCore.DirectoryView import registerDirectory
 from Products.CPSCore.interfaces import ICPSSite
 
 import widgets
+import externaleditor
 
 registerDirectory('skins', globals())
+
+# registration for ExternalEditor
+try:
+    from Products.ExternalEditor.ExternalEditor import registerCallback \
+        as ee_register_cb
+except ImportError:
+    raise
+else:
+    ee_register_cb(externaleditor.callback)
+
 
 # registration for auto content creation (#2205, #2208)
 from tramlinefile import TramlineFile, TramlineImage
