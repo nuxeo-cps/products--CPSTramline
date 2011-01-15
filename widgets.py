@@ -97,6 +97,11 @@ class TramlineWidgetMixin(object):
         trtool = getToolByName(self, 'portal_tramline')
         fileupload.seek(0L)
         tramid = fileupload.read()
+        if len(tramid) > 256: # 9 or 10 right now
+            self.log.error(
+                "Huge tramline id, most probably no interception occurred, "
+                "first 256 bytes: %r", tramid[:256])
+            raise RuntimeError("Invalid tramline id")
         self.log.debug("Tramline id: %s", tramid)
         # correct with actual size
         try:

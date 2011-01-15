@@ -6,7 +6,7 @@ New features
 -
 Bug fixes
 ~~~~~~~~~
--
+- Stop poisoning the log in case tramline interception failed
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
