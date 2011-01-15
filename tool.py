@@ -171,10 +171,14 @@ class TramlineTool(UniqueObject, SimpleItemWithProperties):
         if may_exist:
             if os.path.islink(newhrpath):
                 logger.info("Symbolic link already exists : %s", newhrpath)
-                return
+                return newhrpath
         os.symlink(make_path_relative(newhrpath, path), newhrpath)
 
-        get_txn_manager().created(newhrpath)
+        tm = get_txn_manager()
+        tm.created(newhrpath)
+        # in case prior processing asked for deletion, cancel it
+        # can happen with some in-place modifications
+        tm.unDelete(newhrpath)
         return newhrpath
 
     security.declarePrivate('makeSymlinkFor')
@@ -231,6 +235,17 @@ class TramlineTool(UniqueObject, SimpleItemWithProperties):
         self.makeSymlink(newpath, newid, filename)
         get_txn_manager().created(newpath)
         return newid
+
+    security.declarePrivate('finalizeIdUpdate')
+    def finalizeIdUpdate(self, fobj, old_id):
+        """Remove references to old_id to replace them by new_id.
+
+        This is useful in case of PUT (ExternalEditor)"""
+
+        tm = get_txn_manager()
+        tm.toDelete(self.getHumanReadablePath(old_id, fobj.title))
+        tm.toDelete(self.getFilePath(old_id))
+        self.makeSymlink(fobj.getFullFilename(), str(fobj), fobj.title)
 
     security.declarePrivate('create')
     def create(self, filename, data):

@@ -62,7 +62,7 @@ class TramlineFile(File):
 
     def index_html(self, REQUEST, RESPONSE):
         """Default view method with Tramline headers."""
-        RESPONSE.setHeader('tramline_file','')
+        RESPONSE.setHeader('tramline_file', '')
         # Doesn't make sense to cache at reverse proxy stage, since
         # Apache serves anyway through Tramline. Hence avoid cache pollution.
         # XXX drawback: won't be cached by user agent or in between forward
@@ -76,6 +76,26 @@ class TramlineFile(File):
 	if REQUEST.get_header('Range'):
 	   REQUEST.environ['HTTP_RANGE'] = 'bytes = 0-'
         return File.index_html(self, REQUEST, RESPONSE)
+
+    def PUT(self, REQUEST, RESPONSE):
+        old_id = str(self)
+        File.PUT(self, REQUEST, RESPONSE)
+        self.data = str(self).strip() # tramline has a hard time avoiding \r\n
+        RESPONSE.setHeader('tramline_ok', '')
+        trtool = getToolByName(self, 'portal_tramline')
+        trtool.finalizeIdUpdate(self, old_id)
+
+    def manage_FTPget(self, *args, **kwargs):
+        """Used by ExternalEditor to encapsulate content with its headers."""
+
+        try:
+            resp = self.REQUEST.RESPONSE
+        except AttributeError:
+            pass
+        else:
+            resp.setHeader("tramline_file", '')
+
+        return File.manage_FTPget(self, *args, **kwargs)
 
     def get_size(self):
         """User level size."""
@@ -159,7 +179,10 @@ class TramlineFile(File):
         """Paste part of cut-paste operation."""
         path = self.getFullFilename()
         trtool = getToolByName(self, 'portal_tramline')
-        hr_path = trtool.makeSymlinkFor(self)
+        # in case this is called from a DataModel commit without any change,
+        # the link already exists. This happens, e.g. in call to
+        # CPSDocument.edit() from CPSCore.ProxyBase.FileDownloader.PUT()
+        hr_path = trtool.makeSymlinkFor(self, may_exist=True)
 
         if path:
             try:
