@@ -11,20 +11,19 @@ if (typeof(jQuery)!='undefined')
         jQuery('form[enctype^="multipart/form-data"]').each(function(){
             if (jQuery('input:file', this).length > 0) {
 
-                // If there are some TinyMCE editors, save their content to the
-                // HTML fields (such as textarea) before the Upload code
-                // does its replacements and generations.
-                for (edId in tinyMCE.editors)
-                    tinyMCE.editors[edId].save();
-
                 // Setting up the Upload code (that does replacements and
                 // generations)
-                jQuery(this).fileUpload({use_iframes:false});
+                jQuery(this).fileUpload({
+                    debug: true,
+                    use_iframes: false,
+                    success: function() {
+                      //alert("Success callback");
+                    },
+                    submit_hook: function() {
+                      //alert("Submit hook");
+                    }
+                });
+
             }
         });
     });
-
-// Local Variables:
-// mode: js2
-// End:
-// vim: set filetype=javascript:
