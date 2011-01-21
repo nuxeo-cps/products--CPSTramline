@@ -205,11 +205,10 @@ $.fn.fileUpload = function(options) {
                   log.info("typeof(tinymce): " + typeof(tinymce));
                   if (typeof(tinymce) != 'undefined') {
                     log.info("tinymce.editors: " + tinymce.editors);
-                    for (edId in tinymce.editors) {
-                      if (!tinymce.editors.hasOwnProperty(edId))
-                        return;
-                      log.info("editor " + edId + ": " +
-                           tinymce.editors[edId].getContent({format : 'raw'}));
+                    for (var i = 0; i < tinymce.editors.length; i++) {
+                      var editor = tinymce.editors[i];
+                      log.info("editor " + editor.id + ": " +
+                               editor.getContent({format : 'raw'}));
                     }
                     // Using the recommended method to flush content from the
                     // iframe back to the original HTML field.
