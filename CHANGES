@@ -6,7 +6,6 @@ New features
 - #2322: support for ExternalEditor
 Bug fixes
 ~~~~~~~~~
-- #2324: Embedded TinyMCE compatibility
 - Stop poisoning the log in case tramline interception failed
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~

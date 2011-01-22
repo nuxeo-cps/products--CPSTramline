@@ -34,13 +34,12 @@ $.fn.fileUpload = function(options) {
         stat_url: '/tramprog/',
         stat_delay: 1500,
         stat_timeout: 7000,
-        submit_hook: function() {},
         success: function() {},
         error: function() {},
         action: action
     }, options);
 
-    // console logging cf. http://getfirebug.com/logging
+    // console logging
     var log = {
         info: function(message) {
             if (settings.debug) {
@@ -54,11 +53,11 @@ $.fn.fileUpload = function(options) {
                     window.console.warn(message);
             }
         }
-    };
+    }
 
     if (settings.hidden_submit_name == 'submit')
         log.warn("Don't set the hidden_submit_name options to 'submit'");
-
+    
     var Wrapper = function(element) {
         // Wrapper class
         this.element = element;
@@ -66,16 +65,15 @@ $.fn.fileUpload = function(options) {
         this.forms = new Array();
         this.forms_wrapper = $('<div></div>')
                                 .appendTo(element);
-    };
+    }
 
     $.extend(Wrapper.prototype, {
         // Wrapper methods
         initialize: function() {
             var self = this;
             var empty = true;
-            log.info("Wrapper.initialize");
             if (self.settings.replace_existing_form == true) {
-                this.forms_wrapper.prev().remove();
+                this.forms_wrapper.prev().remove()
             }
             $('form', this.element).each(function() {
                 if (!$(this).hasClass('fuForm')) {
@@ -136,8 +134,7 @@ $.fn.fileUpload = function(options) {
                 }
 
                 // hide form
-                if (!self.settings.debug)
-                  $(form).css('display','none');
+                $(form).css('display','none');
 
                 // check filenames
                 var filenames = '';
@@ -197,30 +194,9 @@ $.fn.fileUpload = function(options) {
             self.submitNext();
         },
         submitNext: function() {
-            log.info('submitNext');
             if (this.forms.length > 0) {
                 var item = this.forms.shift();
                 if (item.submit) {
-
-                  log.info("typeof(tinymce): " + typeof(tinymce));
-                  if (typeof(tinymce) != 'undefined') {
-                    log.info("tinymce.editors: " + tinymce.editors);
-                    for (var i = 0; i < tinymce.editors.length; i++) {
-                      var editor = tinymce.editors[i];
-                      log.info("editor " + editor.id + ": " +
-                               editor.getContent({format : 'raw'}));
-                    }
-                    // Using the recommended method to flush content from the
-                    // iframe back to the original HTML field.
-                    tinymce.triggerSave();
-                  }
-                  // Displaying the actual content of the form through JQuery
-                  log.info("Form a serialized: " + item.form.id +
-                       " " + $(item.form).serialize());
-
-                    if (!self.settings.debug)
-                      // Prompt to let time to read the Firebug console
-                      alert("Programatic submit of the HTML form");
                     item.form.submit();
                     item.setTimeout();
                     log.info('Form '+item.id+' submited');
@@ -229,7 +205,6 @@ $.fn.fileUpload = function(options) {
                     this.submitNext();
                 }
             } else {
-                log.info('settings.success');
                 this.settings.success();
             }
         }
@@ -272,7 +247,7 @@ $.fn.fileUpload = function(options) {
         $('input[type^="submit"]', form)
             .addClass('fuButton')
             .click(function() { wrapper.submit(); });
-    };
+    }
 
     $.extend(Form.prototype, {
         // Form methods
@@ -341,7 +316,7 @@ $.fn.fileUpload = function(options) {
                         self.setTimeout(500);
                      }
                  }
-            });
+            }); 
         }
     });
     return this.each(function(i, item) {
@@ -352,7 +327,7 @@ $.fn.fileUpload = function(options) {
         wrapper.initialize();
         FileUploadRegistry.wrappers.push(wrapper);
     });
-};
+}
 
 })(jQuery);
 

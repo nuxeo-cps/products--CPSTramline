@@ -10,20 +10,7 @@ if (typeof(jQuery)!='undefined')
     jQuery(document).ready(function() {
         jQuery('form[enctype^="multipart/form-data"]').each(function(){
             if (jQuery('input:file', this).length > 0) {
-
-                // Setting up the Upload code (that does replacements and
-                // generations)
-                jQuery(this).fileUpload({
-                    debug: true,
-                    use_iframes: false,
-                    success: function() {
-                      //alert("Success callback");
-                    },
-                    submit_hook: function() {
-                      //alert("Submit hook");
-                    }
-                });
-
+                jQuery(this).fileUpload({use_iframes:false});
             }
         });
     });
