@@ -1,4 +1,22 @@
 ===========================================================
+Package: CPSTramline 0.14.0
+===========================================================
+First release built by: gracinet at: 2011-02-01T21:22:04
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+- #2324: (tempfix) disable progress bar if tinyMCE is present
+- #2322: support for ExternalEditor
+Bug fixes
+~~~~~~~~~
+- Stop poisoning the log in case tramline interception failed
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSTramline 0.13.2
 ===========================================================
 First release built by: gracinet at: 2011-01-04T02:43:17
