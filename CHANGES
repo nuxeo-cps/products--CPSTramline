@@ -3,11 +3,10 @@ Requires
 -
 New features
 ~~~~~~~~~~~~
-- #2324: (tempfix) disable progress bar if tinyMCE is present
-- #2322: support for ExternalEditor
+-
 Bug fixes
 ~~~~~~~~~
-- Stop poisoning the log in case tramline interception failed
+-
 New internal features
 ~~~~~~~~~~~~~~~~~~~~~
 - 
