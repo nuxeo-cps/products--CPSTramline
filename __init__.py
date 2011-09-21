@@ -55,11 +55,15 @@ FileObjectFactory.methods[CPSFileField.meta_type] = (
 FileObjectFactory.methods[CPSImageField.meta_type] = (
     TramlineImage.create, dict(context=True, size_threshold=40960)) # 40 kB
 
+def is_category_applicable(portal):
+    return portal.hasObject('portal_tramline')
+
 registerUpgradeCategory('cpstramline',
                         title='CPS Tramline',
                         floor_version='0.10.0',
                         ref_product='CPSTramline',
                         description='Tramline integration',
+                        is_applicable=is_category_applicable,
                         portal_attribute='upgraded_cpstramline_version')
 
 def initialize(registrar):
