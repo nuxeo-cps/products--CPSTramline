@@ -32,7 +32,9 @@ from Products.CPSSchemas.Widget import widgetRegistry
 from Products.CPSSchemas import BasicWidgets
 
 from Products.CPSSchemas.Widget import CPSWidget
-from Products.CPSSchemas.BasicWidgets import CPSFileWidget, CPSImageWidget
+from Products.CPSSchemas import widgets as cpsschemas_widgets
+from Products.CPSSchemas.widgets.file import CPSFileWidget
+from Products.CPSSchemas.widgets.image import CPSImageWidget
 from Products.CPSSchemas.ExtendedWidgets import CPSAttachedFileWidget
 
 from tramlinefile import TramlineFile, TramlineImage
@@ -47,7 +49,7 @@ JQUERY_RSRC = register_js('jquery.js')
 FUPLOAD_RSRC = register_js('jquery.fileupload.js', depends=JQUERY_RSRC)
 FUPLOAD_AUTO_RSRC = register_js('jquery.fileupload.auto.js',
                                 depends=FUPLOAD_RSRC)
-
+ 
 # Patch to recognize file uploads built from preexisting OFS.File instances
 def makeTramlineFileUpload(ofsfile):
     """Tramline aware variant.
@@ -61,7 +63,7 @@ def makeTramlineFileUpload(ofsfile):
         fu.not_tramline = True
     return fu
 
-BasicWidgets.makeFileUploadFromOFSFile = makeTramlineFileUpload
+cpsschemas_widgets.file.makeFileUploadFromOFSFile = makeTramlineFileUpload
 
 class TramlineWidgetMixin(object):
     """Mixin class to tramline a CPSFileWidget subclass.
