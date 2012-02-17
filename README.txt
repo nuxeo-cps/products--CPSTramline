@@ -4,8 +4,6 @@ CPSTramline README
 
 :Author: Georges Racinet
 
-:Revision: $Id$
-
 .. sectnum::    :depth: 4
 .. contents::   :depth: 4
 
@@ -22,131 +20,131 @@ CPS can access the content from the tramline repository for further
 processing, as provided, e.g, by PortalTransforms.
 
 There are two configuration profiles:
-   - The minimal profile creates the tramline tool
-   - The default profile changes the 'file' schema and layout to enable
-   tramline.
+
+- The minimal profile creates the tramline tool
+- The default profile changes the 'file' schema and layout to enable tramline.
 
 IMPORTANT: LIMITATIONS
 ======================
 
-   - This product will work properly under Unixes systems only.
-   - Doesn't handle Zope OFS.Image instances yet, hence CPSImageWidget
-   and friends won't work.
-   - Dependent fields of CPSFileField (html and text transforms) haven't been
-     ported yet. Therefore indexing won't work
+- This product will work properly under Unixes systems only.
+- Doesn't handle Zope OFS.Image instances yet, hence CPSImageWidget
+  and friends won't work.
+- Dependent fields of CPSFileField (html and text transforms) haven't been
+  ported yet. Therefore indexing won't work
 
 INSTALLATION
 ============
 
-   - use the patched tramline and follow its installation
-     instructions (INSTALL.txt),
-     including mod_python's apache.py patch and virtual host
-     configuration.
+- Use the patched tramline and follow its installation
+  instructions (INSTALL.txt), including mod_python's apache.py patch and virtual
+  host configuration.
 
-     This patched tramline is available as a svn checkout:
-     svn co https://svn.nuxeo.org/pub/vendor/tramline/branches/gracinet-fix-range/
+  This patched tramline is available as a svn checkout:
+  svn co https://svn.nuxeo.org/pub/vendor/tramline/branches/gracinet-fix-range/
 
-     For the record the code was previously present at the following URL:
-     http://svn.viral-prod.com/tramline/trunk/
+  For the record the code was previously present at the following URL:
+  http://svn.viral-prod.com/tramline/trunk/
 
-   - make sure that Zope has a write access to Tramline's repository.
+- Make sure that Zope has a write access to Tramline's repository.
 
-     The recommended way to do that is to
-       + put Zope's effective user in the apache group
-         (e.g, www-data with Debian GNU/Linux)
-       + add the following in the virtual host configuration:
-	 PythonOption allow_group_write True
+  The recommended way to do that is to:
 
-   - Restrict Tramline to work only for "tramlined" widgets
+  * put Zope's effective user in the apache group
+    (e.g, www-data with Debian GNU/Linux)
+  * add the following in the virtual host configuration::
+     PythonOption allow_group_write True
 
-     If you don't do this, then all files from HTTP POST requests will
-     be tramlined. Therefore, you'll need to upgrade all your widgets
-     to work with tramline. See above for OFS.Image limitation.
+- Restrict Tramline to work only for "tramlined" widgets
 
-     In the virtual host, put this
-         PythonOption explicit_enable="true"
-     
-   - Pass the CPS Tramline Minimal profile (at least).
+  If you don't do this, then all files from HTTP POST requests will
+  be tramlined. Therefore, you'll need to upgrade all your widgets
+  to work with tramline. See above for OFS.Image limitation.
 
-   - Enable tramline for your custom (non CPSDefault) content. 
+  In the virtual host, put this PythonOption explicit_enable="true"
 
-     Read this if you want to enable tramline for custom document types whose
-     list of layouts doesn't start with 'common'.
+- Pass the CPS Tramline Minimal profile (at least).
 
-     *Manual enabling*:
+- Enable tramline for your custom (non CPSDefault) content.
 
-     With the 'explicit_enable' PythonOption above, one has to insert an hidden
-     input in each <form> with tramlined inputs. Furthermore, all tramlined 
-     inputs of the form have to occur after this hidden input to be activated.
-  
-     More precisely, the form of the input is:
-     <input type="hidden" name="tramline_enable" 
-            value=VALUE>
-     where VALUE is the space separated list of 
-     'name' attributes of all <input> elements that must be tramlined. 
+  Read this if you want to enable tramline for custom document types whose
+  list of layouts doesn't start with 'common'.
 
-     *The Tramline Enabler Widget*:
+  *Manual enabling*:
 
-     A better way in the CPS context is to ensure that all your tramlined 
-     widgets lie in a layout *after* an instance of "Tramline Enabler
-     Widget" and they will automatically declare themselves to the listening 
-     Tramline filter. This special widget takes care of declaring inputs for 
-     all tramline aware widgets is transparent for the others. 
-     Multiple instances in a single portal_type of this special widget 
-     don't harm. The CPS Tramline minimal profile inserts one in the 
-     'common' layout. 
+  With the 'explicit_enable' PythonOption above, one has to insert an hidden
+  input in each <form> with tramlined inputs. Furthermore, all tramlined
+  inputs of the form have to occur after this hidden input to be activated.
 
-     Therefore you only need to put an instance of this widget  in your layouts
-     if your documents don't have the 'common' layout or you have tramline 
-     content before this layout (in that latter case take care of choosing 
-     a different widget id)
+  More precisely, the form of the input is::
 
-   - Import the CPS Tramline Default OR the CPS Tramline Big File profiles 
-     (optional)
+    <input type="hidden" name="tramline_enable" value=VALUE>
 
-     The CPS Tramline Default profile tramlines Attached File Widgets 
-     for 'file' and 'flexible_content' layouts.
+  where VALUE is the space separated list of
+  'name' attributes of all <input> elements that must be tramlined.
 
-     The CPS Tramline Big File profile creates a new document type (Big File)
-     that has to size limitations and adds also a big file widget in standard
-     flexible layouts. All these file widgets are tramlined. The standard file
-     layout is untouched, safe for the size limitation that goes to 1MB.
+  *The Tramline Enabler Widget*:
 
-     These two profiles are (lightly) incompatible in the hard and anyway serve
-     obviously different purposes
+  A better way in the CPS context is to ensure that all your tramlined
+  widgets lie in a layout *after* an instance of "Tramline Enabler
+  Widget" and they will automatically declare themselves to the listening
+  Tramline filter. This special widget takes care of declaring inputs for
+  all tramline aware widgets is transparent for the others.
+  Multiple instances in a single portal_type of this special widget
+  don't harm. The CPS Tramline minimal profile inserts one in the
+  'common' layout.
 
-   - Go to the Tramline Tool (portal_tramline) and, if needed, correct
-     the tramline path.
+  Therefore you only need to put an instance of this widget  in your layouts
+  if your documents don't have the 'common' layout or you have tramline
+  content before this layout (in that latter case take care of choosing
+  a different widget id)
 
-   - Tramline your custom layouts (if any need to)
+- Import the CPS Tramline Default OR the CPS Tramline Big File profiles
+  (optional)
 
-     You just have to change  "Attached File Widget" instances to 
-     "Tramline Attached File Widget" 
-     (resp. "File Widget" to "Tramline File Widget). 
+  The CPS Tramline Default profile tramlines Attached File Widgets
+  for 'file' and 'flexible_content' layouts.
 
-     This is what the CPS Tramline Default profile does for the 'file' 
+  The CPS Tramline Big File profile creates a new document type (Big File)
+  that has to size limitations and adds also a big file widget in standard
+  flexible layouts. All these file widgets are tramlined. The standard file
+  layout is untouched, safe for the size limitation that goes to 1MB.
+
+  These two profiles are (lightly) incompatible in the hard and anyway serve
+  obviously different purposes
+
+- Go to the Tramline Tool (portal_tramline) and, if needed, correct
+  the tramline path.
+
+- Tramline your custom layouts (if any need to)
+
+  You just have to change  "Attached File Widget" instances to
+  "Tramline Attached File Widget"
+  (resp. "File Widget" to "Tramline File Widget).
+
+  This is what the CPS Tramline Default profile does for the 'file'
      and 'flexible_content' layouts.
 
 EXISTING CONTENT
 ================
 
-   Existing content will be served as before. Any modification going
-   through a Tramline aware widget will store the new content within
-   Tramline.
+Existing content will be served as before. Any modification going
+through a Tramline aware widget will store the new content within
+Tramline.
 
 TRAMLINING CUSTOM WIDGETS
 =========================
 
-     Any widget whose input field has been tramlined will have to be
-     tramline-aware, which can be done by applying the TramlineMixin 
-     class - put it first in the inheritance.
+Any widget whose input field has been tramlined will have to be
+tramline-aware, which can be done by applying the TramlineMixin
+class - put it first in the inheritance.
 
-     This product provides the builtin "Tramline Attached File Widget", 
-     for immediate use and as an example. 
+This product provides the builtin "Tramline Attached File Widget",
+for immediate use and as an example.
 
-     Check how it's been defined in widgets.py to learn how to apply 
-     the mixin class to your own widget classes, assuming that 
-     they do inherit from CPSFileWidget. 
+Check how it's been defined in widgets.py to learn how to apply
+the mixin class to your own widget classes, assuming that
+they do inherit from CPSFileWidget.
 
 
 .. Local Variables:
