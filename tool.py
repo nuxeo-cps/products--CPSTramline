@@ -75,6 +75,9 @@ class TramlineTool(UniqueObject, SimpleItemWithProperties):
     id = 'portal_tramline'
     meta_type = 'Tramline Tool'
 
+    generic_setup_name = 'tramline'
+    generic_setup_logger = 'tramline'
+
     implements(ITramlineTool)
 
     _properties=(
