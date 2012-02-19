@@ -66,6 +66,10 @@ registerUpgradeCategory('cpstramline',
                         is_applicable=is_category_applicable,
                         portal_attribute='upgraded_cpstramline_version')
 
+from Products.CPSUtil.genericsetup import tool_steps
+export_step, import_step = tool_steps('portal_tramline', logger_id='tramline')
+
+
 def initialize(registrar):
 
     # Profile registry

@@ -5,13 +5,9 @@
 
   <include file="upgrade.zcml"/>
 
-  <!--
-Tramline tool
-  -->
-
   <!-- GenericSetup association -->
   <adapter
-      factory=".exportimport.TramlineToolXMLAdapter"
+      factory="Products.CPSUtil.genericsetup.PropertiesSubObjectsXMLAdapter"
       provides="Products.GenericSetup.interfaces.IBody"
       for=".interfaces.ITramlineTool
            Products.GenericSetup.interfaces.ISetupEnviron"
