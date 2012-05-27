@@ -1,4 +1,21 @@
 ===========================================================
+Package: CPSTramline 0.16.1
+===========================================================
+First release built by: gracinet at: 2012-05-27T20:52:29
+Requires
+~~~~~~~~
+-
+New features
+~~~~~~~~~~~~
+-
+Bug fixes
+~~~~~~~~~
+- #2537: use the new GenericSetup helpers defined in CPSUtil
+New internal features
+~~~~~~~~~~~~~~~~~~~~~
+- 
+
+===========================================================
 Package: CPSTramline 0.16.0
 ===========================================================
 First release built by: gracinet at: 2012-01-21T22:23:42
