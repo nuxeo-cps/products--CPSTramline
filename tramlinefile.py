@@ -14,8 +14,6 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 # 02111-1307, USA.
-#
-# $Id: tramlinefile.py 973 2008-10-20 07:03:15Z joe $
 
 import logging
 import os
@@ -26,13 +24,13 @@ try:
 except ImportError:
     PIL_OK = False
 
-from Acquisition import aq_base
+import OFS.Image
 from OFS.Image import Image, File
 from Products.CMFCore.utils import getToolByName
 
 from transactional import get_txn_manager
 
-log = logging.getLogger('Products.CPSTramline.tramlinefile')
+log = logging.getLogger(__name__)
 
 OLD_TITLE_ATTR = '_v_old_title'
 
